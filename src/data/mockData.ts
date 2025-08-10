@@ -111,17 +111,17 @@ export const generateProjectsForYear = (year: number): Project[] => {
           {
             departmentId: 'backend',
             hours: 3600,
-            monthlyDistribution: [500, 500, 500, 500, 500, 500, 500, 500]
+            monthlyDistribution: [450, 450, 450, 450, 450, 450, 450, 450, 0, 0, 0, 0]
           },
           {
             departmentId: 'devops',
             hours: 2400,
-            monthlyDistribution: [300, 300, 300, 300, 300, 300, 300, 300]
+            monthlyDistribution: [300, 300, 300, 300, 300, 300, 300, 300, 0, 0, 0, 0]
           },
           {
             departmentId: 'qa',
             hours: 1200,
-            monthlyDistribution: [150, 150, 150, 150, 150, 150, 150, 150]
+            monthlyDistribution: [150, 150, 150, 150, 150, 150, 150, 150, 0, 0, 0, 0]
           }
         ]
       },
@@ -163,17 +163,17 @@ export const generateProjectsForYear = (year: number): Project[] => {
           {
             departmentId: 'frontend',
             hours: 1800,
-            monthlyDistribution: [300, 300, 300, 300, 300, 300]
+            monthlyDistribution: [300, 300, 300, 300, 300, 300, 0, 0, 0, 0, 0, 0]
           },
           {
             departmentId: 'backend',
             hours: 2400,
-            monthlyDistribution: [400, 400, 400, 400, 400, 400]
+            monthlyDistribution: [400, 400, 400, 400, 400, 400, 0, 0, 0, 0, 0, 0]
           },
           {
             departmentId: 'design',
             hours: 1200,
-            monthlyDistribution: [200, 200, 200, 200, 200, 200]
+            monthlyDistribution: [200, 200, 200, 200, 200, 200, 0, 0, 0, 0, 0, 0]
           }
         ]
       },
@@ -188,12 +188,12 @@ export const generateProjectsForYear = (year: number): Project[] => {
           {
             departmentId: 'frontend',
             hours: 1800,
-            monthlyDistribution: [0, 0, 300, 300, 300, 300, 300, 300]
+            monthlyDistribution: [0, 0, 300, 300, 300, 300, 300, 300, 0, 0, 0, 0]
           },
           {
             departmentId: 'design',
             hours: 1800,
-            monthlyDistribution: [0, 0, 300, 300, 300, 300, 300, 300]
+            monthlyDistribution: [0, 0, 300, 300, 300, 300, 300, 300, 0, 0, 0, 0]
           }
         ]
       },
@@ -245,17 +245,17 @@ export const generateProjectsForYear = (year: number): Project[] => {
           {
             departmentId: 'backend',
             hours: 2400,
-            monthlyDistribution: [600, 600, 600, 600]
+            monthlyDistribution: [600, 600, 600, 600, 0, 0, 0, 0, 0, 0, 0, 0]
           },
           {
             departmentId: 'data',
             hours: 1800,
-            monthlyDistribution: [450, 450, 450, 450]
+            monthlyDistribution: [450, 450, 450, 450, 0, 0, 0, 0, 0, 0, 0, 0]
           },
           {
             departmentId: 'product',
             hours: 600,
-            monthlyDistribution: [150, 150, 150, 150]
+            monthlyDistribution: [150, 150, 150, 150, 0, 0, 0, 0, 0, 0, 0, 0]
           }
         ]
       },
@@ -270,17 +270,17 @@ export const generateProjectsForYear = (year: number): Project[] => {
           {
             departmentId: 'devops',
             hours: 3600,
-            monthlyDistribution: [0, 0, 600, 600, 600, 600, 600, 600, 600]
+            monthlyDistribution: [0, 0, 600, 600, 600, 600, 600, 600, 600, 0, 0, 0]
           },
           {
             departmentId: 'backend',
             hours: 1800,
-            monthlyDistribution: [0, 0, 300, 300, 300, 300, 300, 300, 300]
+            monthlyDistribution: [0, 0, 300, 300, 300, 300, 300, 300, 300, 0, 0, 0]
           },
           {
             departmentId: 'qa',
             hours: 600,
-            monthlyDistribution: [0, 0, 100, 100, 100, 100, 100, 100, 100]
+            monthlyDistribution: [0, 0, 100, 100, 100, 100, 100, 100, 100, 0, 0, 0]
           }
         ]
       },

@@ -24,15 +24,13 @@ const GanttTable: React.FC<GanttTableProps> = ({
 }) => {
   const [expandedDepartments, setExpandedDepartments] = useState<Set<string>>(new Set());
 
-  // Estado para manejar departamentos expandidos
-
   const getMonthsToShow = (): { month: number; year: number }[] => {
     // Determinar el año a mostrar basado en los proyectos
     const yearToShow = projects.length > 0 ? projects[0].startDate.getFullYear() : new Date().getFullYear();
     
     switch (viewMode) {
       case 'year':
-        // Para vista anual, mostrar solo el año de los proyectos
+        // Para vista anual, mostrar exactamente 12 meses del año
         return Array.from({ length: 12 }, (_, i) => ({ month: i, year: yearToShow }));
       
       case 'quarter':
@@ -51,37 +49,13 @@ const GanttTable: React.FC<GanttTableProps> = ({
           return Array.from({ length: 12 }, (_, i) => ({ month: i, year: yearToShow }));
         }
         
-        const months: { month: number; year: number }[] = [];
-        
-        // Si el rango cruza años, generar meses para cada año
-        if (customRange.startYear !== customRange.endYear) {
-          // Año de inicio
-          for (let month = customRange.startMonth; month < 12; month++) {
-            months.push({ month, year: customRange.startYear });
-          }
-          
-          // Años intermedios (si los hay)
-          for (let year = customRange.startYear + 1; year < customRange.endYear; year++) {
-            for (let month = 0; month < 12; month++) {
-              months.push({ month, year });
-            }
-          }
-          
-          // Año final
-          for (let month = 0; month <= customRange.endMonth; month++) {
-            months.push({ month, year: customRange.endYear });
-          }
-        } else {
-          // Rango dentro del mismo año
-          for (let month = customRange.startMonth; month <= customRange.endMonth; month++) {
-            months.push({ month, year: customRange.startYear });
-          }
-        }
-        
-        return months;
+        // Para rangos personalizados, siempre mostrar 12 meses para mantener la estructura
+        // Si el rango cruza años, usar el año de inicio como base
+        const baseYear = customRange.startYear;
+        return Array.from({ length: 12 }, (_, i) => ({ month: i, year: baseYear }));
       
       default:
-        // Por defecto, mostrar solo el año de los proyectos
+        // Por defecto, mostrar exactamente 12 meses del año
         return Array.from({ length: 12 }, (_, i) => ({ month: i, year: yearToShow }));
     }
   };
@@ -92,8 +66,6 @@ const GanttTable: React.FC<GanttTableProps> = ({
     'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
   ];
   
-  // Meses calculados para mostrar
-
   // Función para obtener el nombre del mes con el año si es necesario
   const getMonthDisplayName = (monthData: { month: number; year: number }) => {
     const monthName = monthNames[monthData.month];
@@ -117,23 +89,22 @@ const GanttTable: React.FC<GanttTableProps> = ({
     setExpandedDepartments(newExpanded);
   };
 
-  const filteredDepartments = departments.filter(dept => 
+  const filteredDepartments = departments.filter((dept: Department) => 
     selectedDepartments.includes(dept.id)
   );
 
   return (
     <div className="gantt-table">
-      {/* Header con meses */}
-      <div className="gantt-header">
-        <div className="header-info">
-          <h3>Departamentos</h3>
-          <span className="header-subtitle">
-            {filteredDepartments.length} departamentos seleccionados
-          </span>
-        </div>
-        <div className="header-months">
+      <div className="gantt-table-content">
+        {/* Header con meses como columnas */}
+        <div className="gantt-table-header-row">
+          <div className="header-info">
+            <h3>Departamentos</h3>
+            <span className="header-subtitle">
+              {filteredDepartments.length} departamentos seleccionados
+            </span>
+          </div>
           {months.map((month, index) => {
-            // Detectar si es el primer mes de un año (para agregar separador visual)
             const isYearStart = month.month === 0;
             const isFirstMonth = index === 0;
             
@@ -149,11 +120,9 @@ const GanttTable: React.FC<GanttTableProps> = ({
             );
           })}
         </div>
-      </div>
 
-      {/* Filas de departamentos y proyectos */}
-      <div className="gantt-body">
-        {filteredDepartments.map(department => {
+        {/* Filas de departamentos y proyectos */}
+        {filteredDepartments.map((department: Department) => {
           const isExpanded = expandedDepartments.has(department.id);
           const departmentProjects = projects.filter(project =>
             project.departments.some(d => d.departmentId === department.id)

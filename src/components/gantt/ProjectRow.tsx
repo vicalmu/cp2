@@ -46,16 +46,20 @@ const ProjectRow: React.FC<ProjectRowProps> = ({
 
     const hours = projectDept.monthlyDistribution[monthIndex] || 0;
     
-    // Calcular horas del proyecto para este mes
-    
     if (hours === 0) {
       return <div key={`${monthData.month}-${monthData.year}`} className="project-cell empty" />;
     }
 
+    // Calcular el porcentaje de capacidad que representa este proyecto
+    const department = project.departments.find(d => d.departmentId === departmentId);
+    const totalDepartmentHours = department?.hours || 0;
+    const percentage = totalDepartmentHours > 0 ? Math.round((hours / totalDepartmentHours) * 100) : 0;
+
     return (
       <div key={`${monthData.month}-${monthData.year}`} className="project-cell active">
         <div className="project-hours">{hours}h</div>
-        <div className="project-bar" />
+        <div className="project-percentage">{percentage}%</div>
+        <div className="project-bar" style={{ width: `${Math.min(percentage, 100)}%` }} />
       </div>
     );
   };
@@ -71,6 +75,7 @@ const ProjectRow: React.FC<ProjectRowProps> = ({
               {startMonth + 1}/{startYear} - {endMonth + 1}/{endYear}
             </span>
             <span className="project-priority high">Alta</span>
+            <span className="project-total-hours">Total: {projectDept.hours}h</span>
           </div>
         </div>
       </div>
