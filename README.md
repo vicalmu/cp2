@@ -100,6 +100,24 @@ La aplicación se ejecuta en `http://localhost:3000` (o puerto alternativo si 30
 - ✅ **Distribución mensual**: Datos mock corregidos para alinearse con el timeline
 - ✅ **Barras de capacidad**: Implementadas con colores dinámicos según carga
 
+### 🚨 PROBLEMA ACTUAL - Grid Layout del Gantt
+**Descripción del problema**: 
+El CSS se está aplicando correctamente (se ven los bordes), pero cada celda de proyecto está ocupando todo el ancho en lugar de ocupar solo una columna.
+
+**Análisis técnico**:
+- El problema NO está en el CSS individual de las celdas
+- El problema está en el **grid layout** del Gantt
+- Las celdas de proyecto se están expandiendo horizontalmente en lugar de respetar el grid de columnas
+- El CSS del grid parece estar bien configurado
+- El problema podría estar en el componente `ProjectRow` y cómo se renderizan las celdas individuales
+
+**Archivos a revisar**:
+- `src/components/gantt/ProjectRow.tsx` - Renderizado de celdas de proyecto
+- `src/styles/gantt-table.css` - Configuración del grid layout
+- `src/components/gantt/GanttTable.tsx` - Estructura de la tabla
+
+**Próximo paso**: Revisar y corregir el renderizado de celdas en `ProjectRow` para que respeten el grid de columnas mensuales.
+
 ### 📍 PUNTO DE CONTROL - Estado Actual
 **Fecha**: Diciembre 2024
 **Estado**: Gantt completamente funcional y visualmente corregido
