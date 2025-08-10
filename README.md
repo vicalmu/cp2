@@ -64,6 +64,38 @@ src/
     └── types.ts
 ```
 
+### 🌿 Estructura de Ramas del Proyecto
+El proyecto utiliza un sistema de ramas organizado para separar el desarrollo de funcionalidades de las mejoras de interfaz:
+
+#### **main** (Rama Principal)
+- **Propósito**: Código estable y probado
+- **Estado**: Solo código que ha pasado todas las pruebas
+- **Uso**: Producción y releases estables
+
+#### **DEV** (Desarrollo)
+- **Propósito**: Implementación de nuevas funcionalidades
+- **Contenido**:
+  - Lógica de negocio
+  - Integración de APIs
+  - Testing y debugging
+  - Nuevas características del sistema
+- **Estado**: Desarrollo activo
+
+#### **UI-UX** (Interfaz y Experiencia de Usuario)
+- **Propósito**: Mejoras visuales y de usabilidad
+- **Contenido**:
+  - Optimización de la interfaz
+  - Mejoras de diseño responsive
+  - Animaciones y transiciones
+  - Refinamiento de la experiencia de usuario
+- **Estado**: Mejoras de diseño activas
+
+#### **Flujo de Trabajo Recomendado**
+1. **Desarrollo**: Trabajar en rama `DEV` para nuevas funcionalidades
+2. **Diseño**: Trabajar en rama `UI-UX` para mejoras visuales
+3. **Integración**: Merge de ambas ramas a `main` cuando estén estables
+4. **Testing**: Verificar que todo funcione correctamente en `main`
+
 ### 🎯 Próximos Pasos
 1. **Implementar vista de Proyectos** - Gestión y organización de proyectos
 2. **Implementar Simulador Inteligente** - Simulación de impacto de nuevos proyectos
