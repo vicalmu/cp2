@@ -1,0 +1,215 @@
+/* Estilos de la tabla del Gantt - Estado básico y uniforme */
+.gantt-table {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #dee2e6;
+}
+
+.gantt-table-header {
+  background: #495057;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.gantt-table-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.gantt-table-content {
+  overflow-x: auto;
+}
+
+.gantt-table-header-row {
+  display: grid;
+  grid-template-columns: 250px repeat(12, 1fr);
+  gap: 1px;
+  background: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.month-header {
+  padding: 15px 10px;
+  text-align: center;
+  font-weight: 600;
+  color: #495057;
+  font-size: 14px;
+  border-right: 1px solid #dee2e6;
+}
+
+.month-header:last-child {
+  border-right: none;
+}
+
+.department-row {
+  border-bottom: 1px solid #e9ecef;
+}
+
+.department-row-header {
+  display: grid;
+  grid-template-columns: 250px repeat(12, 1fr);
+  gap: 1px;
+  background: #f8f9fa;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.department-row-header:hover {
+  background: #e9ecef;
+}
+
+.department-info {
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-right: 1px solid #dee2e6;
+}
+
+.department-name {
+  font-weight: 600;
+  color: #495057;
+  font-size: 16px;
+}
+
+.department-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #28a745;
+}
+
+.capacity-cells {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1px;
+}
+
+.capacity-cell {
+  padding: 15px 10px;
+  text-align: center;
+  background: white;
+  border-right: 1px solid #dee2e6;
+  font-size: 14px;
+  color: #6c757d;
+  transition: background-color 0.2s;
+}
+
+.capacity-cell:hover {
+  background: #f8f9fa;
+}
+
+.capacity-cell:last-child {
+  border-right: none;
+}
+
+.project-row {
+  border-bottom: 1px solid #f8f9fa;
+  background: white;
+}
+
+.project-row-header {
+  display: grid;
+  grid-template-columns: 250px repeat(12, 1fr);
+  gap: 1px;
+  background: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.project-row-header:hover {
+  background: #f8f9fa;
+}
+
+.project-info {
+  padding: 15px 20px 15px 40px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-right: 1px solid #dee2e6;
+}
+
+.project-name {
+  font-weight: 500;
+  color: #495057;
+  font-size: 14px;
+}
+
+.project-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.project-cells {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1px;
+}
+
+.project-cell {
+  padding: 10px 8px;
+  text-align: center;
+  background: white;
+  border-right: 1px solid #dee2e6;
+  font-size: 12px;
+  color: #6c757d;
+  transition: background-color 0.2s;
+}
+
+.project-cell:hover {
+  background: #f8f9fa;
+}
+
+.project-cell:last-child {
+  border-right: none;
+}
+
+/* Responsive para la tabla */
+@media (max-width: 1200px) {
+  .gantt-table-header-row,
+  .department-row-header,
+  .project-row-header {
+    grid-template-columns: 200px repeat(6, 1fr);
+  }
+  
+  .capacity-cells,
+  .project-cells {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .gantt-table-header-row,
+  .department-row-header,
+  .project-row-header {
+    grid-template-columns: 150px repeat(4, 1fr);
+  }
+  
+  .capacity-cells,
+  .project-cells {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .department-info,
+  .project-info {
+    padding: 10px 15px;
+  }
+}

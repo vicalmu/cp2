@@ -1,0 +1,74 @@
+/* Estilos del header del Gantt - Versión simple y funcional */
+.gantt-header-section {
+  background: #333;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.gantt-header-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.gantt-header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.gantt-back-button {
+  background: #666;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gantt-back-button:hover {
+  background: #777;
+}
+
+.back-icon {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.back-text {
+  font-weight: 600;
+}
+
+.gantt-header-title {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Responsive para el header */
+@media (max-width: 768px) {
+  .gantt-header-content {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .gantt-header-title {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gantt-header-section {
+    padding: 15px;
+  }
+  
+  .gantt-header-title {
+    font-size: 18px;
+  }
+}
