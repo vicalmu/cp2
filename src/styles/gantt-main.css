@@ -3,6 +3,10 @@
   min-height: 100vh;
   background: #f5f5f5;
   padding: 20px;
+  /* Centrar el contenido del Gantt */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .gantt-content {
@@ -10,6 +14,11 @@
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* El ancho debe ser igual al de la tabla */
+  width: calc(300px + (var(--month-count, 12) * 120px));
+  max-width: 100%;
+  overflow-x: auto;
+  box-sizing: border-box;
 }
 
 .gantt-controls {
@@ -22,6 +31,10 @@
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* El ancho debe ser igual al de la tabla */
+  width: calc(300px + (var(--month-count, 12) * 120px));
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .controls-left,
@@ -37,6 +50,10 @@
   background: #f8f9fa;
   border-radius: 8px;
   border: 1px solid #dee2e6;
+  /* El ancho debe ser igual al de la tabla */
+  width: calc(300px + (var(--month-count, 12) * 120px));
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .summary-card h3 {
@@ -69,4 +86,29 @@
 .stat-value {
   font-weight: 600;
   color: #495057;
+}
+
+/* Responsive para el contenido principal */
+@media (max-width: 1200px) {
+  .gantt-content,
+  .gantt-controls,
+  .capacity-summary {
+    width: calc(250px + (var(--month-count, 12) * 100px));
+  }
+}
+
+@media (max-width: 768px) {
+  .gantt-content,
+  .gantt-controls,
+  .capacity-summary {
+    width: calc(200px + (var(--month-count, 12) * 80px));
+  }
+}
+
+@media (max-width: 480px) {
+  .gantt-content,
+  .gantt-controls,
+  .capacity-summary {
+    width: calc(150px + (var(--month-count, 12) * 60px));
+  }
 }

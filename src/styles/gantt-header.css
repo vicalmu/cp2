@@ -4,6 +4,10 @@
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;
+  /* El ancho debe ser igual al de la tabla del Gantt */
+  width: calc(300px + (var(--month-count, 12) * 120px));
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .gantt-header-content {
@@ -52,7 +56,17 @@
 }
 
 /* Responsive para el header */
+@media (max-width: 1200px) {
+  .gantt-header-section {
+    width: calc(250px + (var(--month-count, 12) * 100px));
+  }
+}
+
 @media (max-width: 768px) {
+  .gantt-header-section {
+    width: calc(200px + (var(--month-count, 12) * 80px));
+  }
+  
   .gantt-header-content {
     flex-direction: column;
     gap: 15px;
@@ -65,6 +79,7 @@
 
 @media (max-width: 480px) {
   .gantt-header-section {
+    width: calc(150px + (var(--month-count, 12) * 60px));
     padding: 15px;
   }
   

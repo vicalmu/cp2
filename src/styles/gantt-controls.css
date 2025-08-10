@@ -9,10 +9,13 @@
   margin-bottom: 25px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   border: 1px solid #e2e8f0;
-  /* El ancho se ajustará automáticamente al contenedor padre */
-  width: 100%;
+  /* El ancho debe ser exactamente igual al de la tabla del Gantt */
+  width: calc(300px + (var(--month-count, 12) * 120px));
   max-width: 100%;
   box-sizing: border-box;
+  /* Centrar los controles horizontalmente */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .controls-left {
@@ -657,11 +660,18 @@
 }
 
 /* Responsive para controles */
+@media (max-width: 1200px) {
+  .gantt-controls {
+    width: calc(250px + (var(--month-count, 12) * 100px));
+  }
+}
+
 @media (max-width: 768px) {
   .gantt-controls {
     flex-direction: column;
     align-items: stretch;
     gap: 20px;
+    width: calc(200px + (var(--month-count, 12) * 80px));
   }
   
   .controls-left {
@@ -700,7 +710,8 @@
 }
 
 @media (max-width: 480px) {
-  .controls-panel {
+  .gantt-controls {
+    width: calc(150px + (var(--month-count, 12) * 60px));
     padding: 20px;
   }
   
