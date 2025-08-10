@@ -1,32 +1,34 @@
 /* Estilos de los controles del Gantt */
 .gantt-controls {
-  display: grid;
-  /* Usar la misma estructura de grid que la tabla Gantt */
-  grid-template-columns: 300px repeat(var(--month-count, 12), 120px);
-  gap: 1px;
-  background: #f8f9fa;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: white;
   border-radius: 16px;
   padding: 25px;
   margin-bottom: 25px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   border: 1px solid #e2e8f0;
-  min-width: calc(300px + (var(--month-count, 12) * 120px));
-  overflow: hidden;
+  /* El ancho se ajustará automáticamente al contenedor padre */
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .controls-left {
-  grid-column: 1;
-  background: white;
-  padding: 20px;
-  border-radius: 12px 0 0 12px;
-  border-right: 1px solid #e2e8f0;
+  flex: 0 0 auto;
+  background: transparent;
+  padding: 0;
+  border: none;
+  border-radius: 0;
 }
 
 .controls-right {
-  grid-column: 2 / -1;
-  background: white;
-  padding: 20px;
-  border-radius: 0 12px 12px 0;
+  flex: 0 0 auto;
+  background: transparent;
+  padding: 0;
+  border: none;
+  border-radius: 0;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -641,56 +643,33 @@
 
 /* Estilos para el contenedor principal de controles */
 .time-selector {
-  background: transparent;
-  border-radius: 0;
-  padding: 0;
-  box-shadow: none;
-  border: none;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
 }
 
 .time-controls {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
 }
 
 /* Responsive para controles */
-@media (max-width: 1200px) {
-  .gantt-controls {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-  
-  .controls-left {
-    grid-column: 1;
-    border-radius: 12px 12px 0 0;
-    border-right: none;
-    border-bottom: 1px solid #e2e8f0;
-  }
-  
-  .controls-right {
-    grid-column: 1;
-    border-radius: 0 0 12px 12px;
-    justify-content: center;
-  }
-}
-
 @media (max-width: 768px) {
   .gantt-controls {
-    grid-template-columns: 1fr;
-    gap: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
   }
   
   .controls-left {
-    grid-column: 1;
-    border-radius: 12px 12px 0 0;
-    border-right: none;
-    border-bottom: 1px solid #e2e8f0;
+    order: 1;
   }
   
   .controls-right {
-    grid-column: 1;
-    border-radius: 0 0 12px 12px;
+    order: 2;
     justify-content: center;
   }
   
