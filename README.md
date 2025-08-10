@@ -118,6 +118,21 @@ El CSS se está aplicando correctamente (se ven los bordes), pero cada celda de 
 
 **Próximo paso**: Revisar y corregir el renderizado de celdas en `ProjectRow` para que respeten el grid de columnas mensuales.
 
+### ✅ PROBLEMA RESUELTO - Grid Layout del Gantt
+**Solución implementada**: 
+Se ha corregido la estructura del grid layout para que las celdas de proyecto se muestren correctamente en sus columnas mensuales.
+
+**Cambios realizados**:
+- **`ProjectRow.tsx`**: Eliminado el contenedor `.project-cells` que causaba el problema
+- **`gantt-table.css`**: Modificado `.project-row` para usar el grid principal de la tabla
+- **Estructura corregida**: Ahora cada celda de proyecto ocupa exactamente una columna del grid mensual
+
+**Resultado**:
+- Las celdas de proyecto ahora se muestran como celdas individuales en sus respectivas columnas mensuales
+- El grid layout funciona correctamente con `grid-template-columns: 300px repeat(var(--month-count, 12), 120px)`
+- Cada celda respeta el ancho de 120px y se alinea perfectamente con las columnas de meses
+- Se eliminó el comportamiento de expansión horizontal incorrecto
+
 ### 📍 PUNTO DE CONTROL - Estado Actual
 **Fecha**: Diciembre 2024
 **Estado**: Gantt completamente funcional y visualmente corregido

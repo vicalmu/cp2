@@ -15,14 +15,15 @@
 /* Header de la tabla con meses como columnas - CORREGIDO */
 .gantt-table-header-row {
   display: grid;
-  grid-template-columns: 300px repeat(12, 120px);
+  /* El número de columnas se establecerá dinámicamente desde JavaScript */
+  grid-template-columns: 300px repeat(var(--month-count, 12), 120px);
   gap: 1px;
   background: #f8f9fa;
   border-bottom: 2px solid #dee2e6;
   position: sticky;
   top: 0;
   z-index: 10;
-  min-width: 1740px; /* 300px + (12 * 120px) */
+  min-width: calc(300px + (var(--month-count, 12) * 120px));
 }
 
 .header-info {
@@ -81,12 +82,13 @@
 
 .department-row-header {
   display: grid;
-  grid-template-columns: 300px repeat(12, 120px);
+  /* El número de columnas se establecerá dinámicamente desde JavaScript */
+  grid-template-columns: 300px repeat(var(--month-count, 12), 120px);
   gap: 1px;
   background: white;
   cursor: pointer;
   transition: background-color 0.2s;
-  min-width: 1740px;
+  min-width: calc(300px + (var(--month-count, 12) * 120px));
 }
 
 .department-row-header:hover {
@@ -158,9 +160,10 @@
 /* Celdas de capacidad - CORREGIDO */
 .capacity-cells {
   display: grid;
-  grid-template-columns: repeat(12, 120px);
+  /* El número de columnas se establecerá dinámicamente desde JavaScript */
+  grid-template-columns: repeat(var(--month-count, 12), 120px);
   gap: 1px;
-  min-width: 1440px; /* 12 * 120px */
+  min-width: calc(var(--month-count, 12) * 120px);
 }
 
 .capacity-cell {
@@ -232,96 +235,137 @@
 
 /* Filas de proyectos - CORREGIDO */
 .project-row {
+  display: grid;
+  /* El número de columnas se establecerá dinámicamente desde JavaScript */
+  grid-template-columns: 300px repeat(var(--month-count, 12), 120px);
+  gap: 1px;
+  background: white;
   border-bottom: 1px solid #e9ecef;
-  background: #f8f9fa;
+  min-width: calc(300px + (var(--month-count, 12) * 120px));
+  position: relative;
+}
+
+.project-row::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(33, 150, 243, 0.02) 0%, rgba(33, 150, 243, 0.05) 100%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .project-row-header {
   display: grid;
-  grid-template-columns: 300px repeat(12, 120px);
+  /* El número de columnas se establecerá dinámicamente desde JavaScript */
+  grid-template-columns: 300px repeat(var(--month-count, 12), 120px);
   gap: 1px;
-  background: #f8f9fa;
-  min-width: 1740px;
+  background: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-width: calc(300px + (var(--month-count, 12) * 120px));
 }
 
 .project-row-header:hover {
-  background: #e9ecef;
+  background: #f8f9fa;
 }
 
 .project-info {
   padding: 15px 20px;
-  border-right: 1px solid #dee2e6;
-  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-right: 1px solid #e9ecef;
+  background: white;
   min-width: 300px;
+  z-index: 2;
+  position: relative;
 }
 
 .project-name {
+  font-size: 16px;
   font-weight: 600;
-  color: #495057;
-  font-size: 14px;
-  margin: 0 0 4px 0;
+  color: #1565c0;
+  margin: 0;
+  line-height: 1.3;
 }
 
 .project-description {
-  font-size: 12px;
+  font-size: 13px;
   color: #6c757d;
-  margin-bottom: 8px;
-  display: block;
+  margin: 0;
+  line-height: 1.4;
 }
 
 .project-meta {
   display: flex;
-  gap: 10px;
-  font-size: 12px;
-  color: #6c757d;
+  gap: 8px;
+  margin-top: 8px;
   flex-wrap: wrap;
 }
 
 .project-duration {
   background: #e3f2fd;
-  color: #1976d2;
-  padding: 2px 6px;
+  color: #1565c0;
+  padding: 4px 8px;
   border-radius: 4px;
+  font-size: 11px;
   font-weight: 500;
+  border: 1px solid #bbdefb;
 }
 
 .project-priority.high {
   background: #ffebee;
-  color: #d32f2f;
-  padding: 2px 6px;
+  color: #c62828;
+  padding: 4px 8px;
   border-radius: 4px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid #ffcdd2;
 }
 
 .project-total-hours {
   background: #f3e5f5;
-  color: #7b1fa2;
-  padding: 2px 6px;
+  color: #6a1b9a;
+  padding: 4px 8px;
   border-radius: 4px;
+  font-size: 11px;
   font-weight: 500;
-}
-
-.project-cells {
-  display: grid;
-  grid-template-columns: repeat(12, 120px);
-  gap: 1px;
-  min-width: 1440px;
+  border: 1px solid #e1bee7;
 }
 
 .project-cell {
-  padding: 10px 8px;
+  padding: 12px 8px;
   text-align: center;
+  border: 1px solid #dee2e6;
   border-right: 1px solid #e9ecef;
-  background: #f8f9fa;
+  background: #ffffff;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   justify-content: center;
-  min-height: 60px;
+  align-items: center;
+  min-height: 70px;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  z-index: 2;
+  /* Asegurar que cada celda ocupe exactamente una columna del grid */
+  width: 120px;
+  max-width: 120px;
+  min-width: 120px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  flex-grow: 0;
 }
 
 .project-cell:hover {
-  background: #e9ecef;
+  background: #f8f9fa;
+  border-color: #2196f3;
+  box-shadow: 0 3px 12px rgba(33, 150, 243, 0.2);
+  transform: translateY(-2px);
 }
 
 .project-cell:last-child {
@@ -329,33 +373,68 @@
 }
 
 .project-cell.empty {
-  background: #f8f9fa;
+  background: #fafbfc;
+  border: 1px solid #f1f3f4;
+  box-shadow: none;
+}
+
+.project-cell.empty:hover {
+  background: #f1f3f4;
+  border-color: #dadce0;
+  transform: none;
+  box-shadow: none;
 }
 
 .project-cell.active {
-  background: #e3f2fd;
-  border: 1px solid #2196f3;
+  background: linear-gradient(135deg, #e3f2fd 0%, #f3f9ff 100%);
+  border: 2px solid #2196f3;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.15);
+  transform: translateY(-1px);
 }
 
 .project-hours {
-  font-weight: 600;
-  font-size: 14px;
-  color: #1976d2;
+  font-weight: 700;
+  font-size: 15px;
+  color: #1565c0;
+  background: #ffffff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #e3f2fd;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  min-width: 50px;
+  text-align: center;
 }
 
 .project-percentage {
-  font-size: 11px;
-  color: #1976d2;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 600;
+  color: #424242;
+  background: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
 }
 
 .project-bar {
-  height: 4px;
-  background: #2196f3;
-  border-radius: 2px;
-  width: 100%;
-  max-width: 100%;
-  transition: width 0.3s ease;
+  height: 6px;
+  background: linear-gradient(90deg, #2196f3 0%, #42a5f5 100%);
+  border-radius: 3px;
+  width: 60%;
+  max-width: 60%;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(33, 150, 243, 0.3);
+  position: relative;
+}
+
+.project-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+  border-radius: 3px;
 }
 
 /* Responsive - CORREGIDO */
@@ -363,8 +442,8 @@
   .gantt-table-header-row,
   .department-row-header,
   .project-row-header {
-    grid-template-columns: 250px repeat(12, 100px);
-    min-width: 1450px;
+    grid-template-columns: 250px repeat(var(--month-count, 12), 100px);
+    min-width: calc(250px + (var(--month-count, 12) * 100px));
   }
   
   .header-info,
@@ -375,8 +454,8 @@
   
   .capacity-cells,
   .project-cells {
-    grid-template-columns: repeat(12, 100px);
-    min-width: 1200px;
+    grid-template-columns: repeat(var(--month-count, 12), 100px);
+    min-width: calc(var(--month-count, 12) * 100px);
   }
   
   .month-header,
@@ -390,8 +469,8 @@
   .gantt-table-header-row,
   .department-row-header,
   .project-row-header {
-    grid-template-columns: 200px repeat(12, 80px);
-    min-width: 1160px;
+    grid-template-columns: 200px repeat(var(--month-count, 12), 80px);
+    min-width: calc(200px + (var(--month-count, 12) * 80px));
   }
   
   .header-info,
@@ -416,8 +495,8 @@
   
   .capacity-cells,
   .project-cells {
-    grid-template-columns: repeat(12, 80px);
-    min-width: 960px;
+    grid-template-columns: repeat(var(--month-count, 12), 80px);
+    min-width: calc(var(--month-count, 12) * 80px);
   }
   
   .capacity-cell,
@@ -439,8 +518,8 @@
   .gantt-table-header-row,
   .department-row-header,
   .project-row-header {
-    grid-template-columns: 150px repeat(12, 60px);
-    min-width: 870px;
+    grid-template-columns: 150px repeat(var(--month-count, 12), 60px);
+    min-width: calc(150px + (var(--month-count, 12) * 60px));
   }
   
   .header-info,
@@ -452,8 +531,8 @@
   
   .capacity-cells,
   .project-cells {
-    grid-template-columns: repeat(12, 60px);
-    min-width: 720px;
+    grid-template-columns: repeat(var(--month-count, 12), 60px);
+    min-width: calc(var(--month-count, 12) * 60px);
   }
   
   .month-header,

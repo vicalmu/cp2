@@ -80,9 +80,8 @@ const ProjectRow: React.FC<ProjectRowProps> = ({
         </div>
       </div>
 
-      <div className="project-cells">
-        {months.map(month => getProjectCell(month))}
-      </div>
+      {/* Renderizar las celdas directamente sin contenedor .project-cells */}
+      {months.map(month => getProjectCell(month))}
     </div>
   );
 };

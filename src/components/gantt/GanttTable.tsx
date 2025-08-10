@@ -93,6 +93,26 @@ const GanttTable: React.FC<GanttTableProps> = ({
     selectedDepartments.includes(dept.id)
   );
 
+  // Establecer la variable CSS para el número de meses
+  React.useEffect(() => {
+    const monthCount = months.length.toString();
+    document.documentElement.style.setProperty('--month-count', monthCount);
+    console.log('🔧 CSS Variable --month-count set to:', monthCount, 'months');
+    console.log('🔧 Months array:', months);
+    
+    // Verificar que la variable se estableció correctamente
+    const computedValue = getComputedStyle(document.documentElement).getPropertyValue('--month-count');
+    console.log('🔧 CSS Variable computed value:', computedValue);
+    
+    // Verificar que se aplica a las celdas
+    const projectCells = document.querySelector('.project-cells');
+    if (projectCells) {
+      const computedStyle = getComputedStyle(projectCells);
+      console.log('🔧 Project cells grid-template-columns:', computedStyle.gridTemplateColumns);
+      console.log('🔧 Project cells min-width:', computedStyle.minWidth);
+    }
+  }, [months]);
+
   return (
     <div className="gantt-table">
       <div className="gantt-table-content">
