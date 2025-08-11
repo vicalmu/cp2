@@ -6,6 +6,7 @@
   margin-bottom: 20px;
   /* El ancho debe ser igual al de la tabla del Gantt */
   width: calc(300px + (var(--month-count, 12) * 120px));
+  min-width: 1200px; /* Ancho mínimo para evitar reducción drástica */
   max-width: 100%;
   box-sizing: border-box;
 }
