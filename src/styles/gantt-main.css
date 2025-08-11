@@ -112,3 +112,6 @@
     width: calc(150px + (var(--month-count, 12) * 60px));
   }
 }
+
+/* Importar estilos compactos para controles */
+@import './gantt-controls-compact.css';

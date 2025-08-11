@@ -105,24 +105,26 @@ const GanttView: React.FC = () => {
       </div>
 
       <div className="gantt-controls">
-        <div className="controls-left">
-          <TimeSelector
-            currentYear={currentYear}
-            viewMode={viewMode}
-            selectedQuarter={selectedQuarter}
-            customRange={customRange}
-            onViewModeChange={handleViewModeChange}
-            onYearChange={handleYearChange}
-            onQuarterChange={handleQuarterChange}
-            onCustomRangeChange={handleCustomRangeChange}
-          />
-        </div>
-        <div className="controls-right">
-          <MultiSelectDropdown
-            departments={mockDepartments}
-            selectedDepartments={selectedDepartments}
-            onSelectionChange={setSelectedDepartments}
-          />
+        <div className="controls-main-row">
+          <div className="controls-left">
+            <TimeSelector
+              currentYear={currentYear}
+              viewMode={viewMode}
+              selectedQuarter={selectedQuarter}
+              customRange={customRange}
+              onViewModeChange={handleViewModeChange}
+              onYearChange={handleYearChange}
+              onQuarterChange={handleQuarterChange}
+              onCustomRangeChange={handleCustomRangeChange}
+            />
+          </div>
+          <div className="controls-right">
+            <MultiSelectDropdown
+              departments={mockDepartments}
+              selectedDepartments={selectedDepartments}
+              onSelectionChange={setSelectedDepartments}
+            />
+          </div>
         </div>
       </div>
 
