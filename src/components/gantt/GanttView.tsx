@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useProjects } from '../../context/ProjectsContext';
 import { ViewMode, Quarter, TimeRange } from '../../data/types';
-import { mockDepartments, generateProjectsForYear, calculateMonthlyCapacityForYear } from '../../data/mockData';
+import { mockDepartments, calculateMonthlyCapacityForYear } from '../../data/mockData';
 import TimeSelector from './TimeSelector';
 import MultiSelectDropdown from './MultiSelectDropdown';
 import GanttTable from './GanttTable';
 
 const GanttView: React.FC = () => {
   const navigate = useNavigate();
+  const { projects } = useProjects();
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [viewMode, setViewMode] = useState<ViewMode>('year');
   const [selectedQuarter, setSelectedQuarter] = useState<Quarter | undefined>(undefined);
@@ -32,33 +34,38 @@ const GanttView: React.FC = () => {
     }
   }, [currentYear, viewMode]);
   
-  // Generar datos dinámicamente para el año seleccionado o rango personalizado
+  // Filtrar proyectos según el año seleccionado o rango personalizado
   const projectsForCurrentYear = useMemo(() => {
     if (viewMode === 'custom' && customRange) {
-      // Para rangos personalizados, generar datos para todos los años involucrados
-      const years = [];
-      for (let year = customRange.startYear; year <= customRange.endYear; year++) {
-        years.push(year);
-      }
-      
-      // Generar proyectos para cada año y combinar
-      const allProjects = years.flatMap(year => generateProjectsForYear(year));
-      return allProjects;
+      // Para rangos personalizados, filtrar proyectos que estén en el rango
+      return projects.filter(project => {
+        const projectStartYear = project.startDate.getFullYear();
+        const projectEndYear = project.endDate.getFullYear();
+        
+        // Verificar si el proyecto se solapa con el rango personalizado
+        return (projectStartYear <= customRange.endYear && projectEndYear >= customRange.startYear);
+      });
     } else {
-      // Para vista anual o trimestral, usar solo el año seleccionado
-      return generateProjectsForYear(currentYear);
+      // Para vista anual o trimestral, filtrar proyectos del año seleccionado
+      return projects.filter(project => {
+        const projectStartYear = project.startDate.getFullYear();
+        const projectEndYear = project.endDate.getFullYear();
+        
+        // Verificar si el proyecto está activo en el año seleccionado
+        return (projectStartYear <= currentYear && projectEndYear >= currentYear);
+      });
     }
-  }, [currentYear, viewMode, customRange]);
+  }, [projects, currentYear, viewMode, customRange]);
 
   const monthlyCapacityForCurrentYear = useMemo(() => {
     if (viewMode === 'custom' && customRange) {
-      // Para rangos personalizados, generar capacidad para todos los años involucrados
+      // Para rangos personalizados, calcular capacidad para todos los años involucrados
       const years = [];
       for (let year = customRange.startYear; year <= customRange.endYear; year++) {
         years.push(year);
       }
       
-      // Generar capacidad para cada año y combinar
+      // Calcular capacidad para cada año
       const allCapacities = years.flatMap(year => calculateMonthlyCapacityForYear(year));
       return allCapacities;
     } else {
@@ -102,6 +109,15 @@ const GanttView: React.FC = () => {
               <span className="back-text">Inicio</span>
             </button>
             <h1 className="gantt-header-title">Modo Gantt - Capacidad de Departamentos</h1>
+          </div>
+          <div className="gantt-header-right">
+            <button 
+              onClick={() => navigate('/proyectos')}
+              className="gantt-projects-button"
+              aria-label="Gestionar proyectos"
+            >
+              📋 Gestionar Proyectos
+            </button>
           </div>
         </div>
       </div>

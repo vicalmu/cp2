@@ -1,0 +1,6 @@
+/* Importar todos los módulos de estilos de proyectos */
+@import './projects-base.css';
+@import './projects-list.css';
+@import './projects-form.css';
+@import './projects-filters.css';
+@import './projects-stats.css';
