@@ -49,10 +49,22 @@ const GanttTable: React.FC<GanttTableProps> = ({
           return Array.from({ length: 12 }, (_, i) => ({ month: i, year: yearToShow }));
         }
         
-        // Para rangos personalizados, siempre mostrar 12 meses para mantener la estructura
-        // Si el rango cruza años, usar el año de inicio como base
-        const baseYear = customRange.startYear;
-        return Array.from({ length: 12 }, (_, i) => ({ month: i, year: baseYear }));
+        // Para rangos personalizados, mostrar solo los meses del rango seleccionado
+        const monthsToShow = [];
+        let currentDate = new Date(customRange.startYear, customRange.startMonth);
+        const endDate = new Date(customRange.endYear, customRange.endMonth);
+        
+        while (currentDate <= endDate) {
+          monthsToShow.push({
+            month: currentDate.getMonth(),
+            year: currentDate.getFullYear()
+          });
+          
+          // Avanzar al siguiente mes
+          currentDate.setMonth(currentDate.getMonth() + 1);
+        }
+        
+        return monthsToShow;
       
       default:
         // Por defecto, mostrar exactamente 12 meses del año
@@ -69,10 +81,15 @@ const GanttTable: React.FC<GanttTableProps> = ({
   // Función para obtener el nombre del mes con el año si es necesario
   const getMonthDisplayName = (monthData: { month: number; year: number }) => {
     const monthName = monthNames[monthData.month];
-    const yearToShow = projects.length > 0 ? projects[0].startDate.getFullYear() : new Date().getFullYear();
     
-    // Solo mostrar el año si no es el año de los proyectos o si estamos en modo personalizado
-    if (viewMode === 'custom' && monthData.year !== yearToShow) {
+    // En modo personalizado, siempre mostrar el año para mayor claridad
+    if (viewMode === 'custom') {
+      return `${monthName} ${monthData.year}`;
+    }
+    
+    // Para otros modos, solo mostrar el año si es diferente al año base
+    const baseYear = projects.length > 0 ? projects[0].startDate.getFullYear() : new Date().getFullYear();
+    if (monthData.year !== baseYear) {
       return `${monthName} ${monthData.year}`;
     }
     

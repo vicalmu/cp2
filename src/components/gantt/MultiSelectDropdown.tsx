@@ -52,26 +52,27 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
   // Texto del botón principal
   const getButtonText = () => {
     if (selectedCount === 0) return 'Seleccionar departamentos';
-    if (selectedCount === totalCount) return `Todos los departamentos (${totalCount})`;
+    if (selectedCount === totalCount) return `Todos (${totalCount})`;
     if (selectedCount === 1) {
       const dept = departments.find(d => d.id === selectedDepartments[0]);
       return dept ? dept.name : '1 departamento';
     }
-    return `${selectedCount} departamentos seleccionados`;
+    return `${selectedCount} de ${totalCount}`;
   };
 
   return (
-    <div className="multi-select-dropdown" ref={dropdownRef}>
+    <div className="multi-select-dropdown compact" ref={dropdownRef}>
       <button
-        className="dropdown-trigger"
+        className="dropdown-trigger compact"
         onClick={handleToggle}
         type="button"
+        title="Filtrar departamentos"
       >
         <span className="dropdown-text">{getButtonText()}</span>
         <svg 
           className={`dropdown-arrow ${isOpen ? 'open' : ''}`}
-          width="16" 
-          height="16" 
+          width="12" 
+          height="12" 
           viewBox="0 0 24 24" 
           fill="none" 
           stroke="currentColor" 
@@ -82,19 +83,19 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
       </button>
 
       {isOpen && (
-        <div className="dropdown-menu">
+        <div className="dropdown-menu compact">
           <div className="dropdown-header">
             <h4>Departamentos</h4>
             <div className="dropdown-actions">
               <button
-                className="action-btn select-all"
+                className="action-btn compact select-all"
                 onClick={handleSelectAll}
                 type="button"
               >
-                Seleccionar todos
+                Todos
               </button>
               <button
-                className="action-btn deselect-all"
+                className="action-btn compact deselect-all"
                 onClick={handleDeselectAll}
                 type="button"
               >

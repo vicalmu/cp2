@@ -1,11 +1,40 @@
 /* Estilos de los controles del Gantt */
-.controls-panel {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 15px;
+.gantt-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: white;
+  border-radius: 16px;
   padding: 25px;
   margin-bottom: 25px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  /* El ancho debe ser exactamente igual al de la tabla del Gantt */
+  width: calc(300px + (var(--month-count, 12) * 120px));
+  max-width: 100%;
+  box-sizing: border-box;
+  /* Centrar los controles horizontalmente */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.controls-left {
+  flex: 0 0 auto;
+  background: transparent;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+}
+
+.controls-right {
+  flex: 0 0 auto;
+  background: transparent;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .controls-header {
@@ -259,8 +288,401 @@
   display: block;
 }
 
+/* Estilos para el selector de rango personalizado */
+.custom-range-selector {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-range-selector::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+}
+
+.custom-range-selector:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.custom-range-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.custom-range-header label {
+  font-weight: 700;
+  color: #1e293b;
+  font-size: 16px;
+  margin: 0;
+}
+
+.range-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.range-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.range-badge.same-year {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  color: #1e40af;
+  border: 1px solid #93c5fd;
+}
+
+.range-badge.cross-year {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #92400e;
+  border: 1px solid #fbbf24;
+}
+
+.range-duration {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  color: #065f46;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid #6ee7b7;
+}
+
+.cross-year-info {
+  background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+  color: #7c3aed;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid #c4b5fd;
+}
+
+.custom-range-inputs {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.range-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 140px;
+}
+
+.range-input-group label {
+  font-weight: 600;
+  color: #475569;
+  font-size: 14px;
+  margin: 0;
+}
+
+.month-year-inputs {
+  display: flex;
+  gap: 8px;
+}
+
+.month-year-inputs select {
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 80px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.month-year-inputs select:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.month-year-inputs select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.range-separator {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.range-separator span {
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  color: #64748b;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid #cbd5e1;
+  white-space: nowrap;
+}
+
+.range-description {
+  background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
+  border: 1px solid #fbbf24;
+  border-radius: 12px;
+  padding: 15px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.range-description::before {
+  content: '📅';
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+}
+
+.range-text {
+  font-weight: 600;
+  color: #92400e;
+  font-size: 15px;
+  margin-left: 25px;
+}
+
+/* Estilos para el selector de trimestre */
+.quarter-selector {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 15px 20px;
+  margin-top: 15px;
+}
+
+.quarter-selector label {
+  font-weight: 600;
+  color: #475569;
+  font-size: 14px;
+  margin: 0 0 10px 0;
+  display: block;
+}
+
+.quarter-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.quarter-btn {
+  background: #f1f5f9;
+  color: #64748b;
+  border: 2px solid #e2e8f0;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 13px;
+  min-width: 50px;
+  text-align: center;
+}
+
+.quarter-btn:hover {
+  background: #e2e8f0;
+  color: #475569;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+.quarter-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: #5a6fd8;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Estilos para el selector de año */
+.year-selector {
+  background: white;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 100px;
+  position: relative;
+}
+
+.year-selector.disabled {
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+  border-color: #d1d5db;
+}
+
+.year-selector:not(.disabled):hover,
+.year-selector:not(.disabled):focus {
+  border-color: #667eea;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.year-selector label {
+  font-weight: 600;
+  color: #374151;
+  font-size: 14px;
+  margin-right: 8px;
+}
+
+.year-selector select {
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  color: inherit;
+  cursor: pointer;
+  outline: none;
+  min-width: 60px;
+}
+
+.year-selector select:disabled {
+  cursor: not-allowed;
+}
+
+/* Estilos para el selector de modo de vista */
+.view-mode-selector {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 15px 20px;
+}
+
+.view-mode-selector label {
+  font-weight: 600;
+  color: #475569;
+  font-size: 14px;
+  margin: 0 0 10px 0;
+  display: block;
+}
+
+.view-mode-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.view-mode-btn {
+  background: #f1f5f9;
+  color: #64748b;
+  border: 2px solid #e2e8f0;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.view-mode-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.view-mode-btn:hover::before {
+  left: 100%;
+}
+
+.view-mode-btn:hover {
+  background: #e2e8f0;
+  color: #475569;
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.view-mode-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: #5a6fd8;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Estilos para el contenedor principal de controles */
+.time-selector {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.time-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 /* Responsive para controles */
+@media (max-width: 1200px) {
+  .gantt-controls {
+    width: calc(250px + (var(--month-count, 12) * 100px));
+  }
+}
+
 @media (max-width: 768px) {
+  .gantt-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+    width: calc(200px + (var(--month-count, 12) * 80px));
+  }
+  
+  .controls-left {
+    order: 1;
+  }
+  
+  .controls-right {
+    order: 2;
+    justify-content: center;
+  }
+  
   .controls-header {
     flex-direction: column;
     align-items: stretch;
@@ -288,7 +710,8 @@
 }
 
 @media (max-width: 480px) {
-  .controls-panel {
+  .gantt-controls {
+    width: calc(150px + (var(--month-count, 12) * 60px));
     padding: 20px;
   }
   
@@ -304,5 +727,61 @@
   
   .multi-select-dropdown {
     min-width: 100%;
+  }
+}
+
+/* Responsive design para el custom-range-selector */
+@media (max-width: 768px) {
+  .custom-range-inputs {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+  
+  .range-input-group {
+    min-width: auto;
+  }
+  
+  .month-year-inputs {
+    justify-content: center;
+  }
+  
+  .range-separator {
+    align-self: center;
+    margin: 10px 0;
+  }
+  
+  .custom-range-header {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  
+  .range-info {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-range-selector {
+    padding: 15px;
+    margin-top: 10px;
+  }
+  
+  .month-year-inputs {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .month-year-inputs select {
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .range-badge,
+  .range-duration,
+  .cross-year-info {
+    font-size: 11px;
+    padding: 4px 8px;
   }
 }

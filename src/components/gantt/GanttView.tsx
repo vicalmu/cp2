@@ -21,14 +21,16 @@ const GanttView: React.FC = () => {
     mockDepartments.map(dept => dept.id)
   );
 
-  // Sincronizar customRange cuando cambie el año
+  // Sincronizar customRange cuando cambie el año (solo si NO está en modo personalizado)
   useEffect(() => {
-    setCustomRange(prev => ({
-      ...prev,
-      startYear: currentYear,
-      endYear: currentYear
-    }));
-  }, [currentYear]);
+    if (viewMode !== 'custom') {
+      setCustomRange(prev => ({
+        ...prev,
+        startYear: currentYear,
+        endYear: currentYear
+      }));
+    }
+  }, [currentYear, viewMode]);
   
   // Generar datos dinámicamente para el año seleccionado o rango personalizado
   const projectsForCurrentYear = useMemo(() => {
@@ -105,24 +107,26 @@ const GanttView: React.FC = () => {
       </div>
 
       <div className="gantt-controls">
-        <div className="controls-left">
-          <TimeSelector
-            currentYear={currentYear}
-            viewMode={viewMode}
-            selectedQuarter={selectedQuarter}
-            customRange={customRange}
-            onViewModeChange={handleViewModeChange}
-            onYearChange={handleYearChange}
-            onQuarterChange={handleQuarterChange}
-            onCustomRangeChange={handleCustomRangeChange}
-          />
-        </div>
-        <div className="controls-right">
-          <MultiSelectDropdown
-            departments={mockDepartments}
-            selectedDepartments={selectedDepartments}
-            onSelectionChange={setSelectedDepartments}
-          />
+        <div className="controls-main-row">
+          <div className="controls-left">
+            <TimeSelector
+              currentYear={currentYear}
+              viewMode={viewMode}
+              selectedQuarter={selectedQuarter}
+              customRange={customRange}
+              onViewModeChange={handleViewModeChange}
+              onYearChange={handleYearChange}
+              onQuarterChange={handleQuarterChange}
+              onCustomRangeChange={handleCustomRangeChange}
+            />
+          </div>
+          <div className="controls-right">
+            <MultiSelectDropdown
+              departments={mockDepartments}
+              selectedDepartments={selectedDepartments}
+              onSelectionChange={setSelectedDepartments}
+            />
+          </div>
         </div>
       </div>
 

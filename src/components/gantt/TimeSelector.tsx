@@ -22,6 +22,8 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
   onQuarterChange,
   onCustomRangeChange
 }) => {
+  const [isCustomExpanded, setIsCustomExpanded] = useState(false);
+  
   const months = [
     'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
     'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
@@ -34,14 +36,11 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
     { value: 4, label: 'Q4', months: 'Oct - Dic' }
   ];
 
-  // Generar años disponibles (desde 2020 hasta 2030)
   const availableYears = Array.from({ length: 11 }, (_, i) => 2020 + i);
 
-  // Verificar si el rango personalizado cruza años
   const isCrossYearRange = customRange && 
     customRange.startYear !== customRange.endYear;
 
-  // Obtener el texto descriptivo del rango
   const getRangeDescription = () => {
     if (!customRange) return '';
     
@@ -55,7 +54,6 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
     }
   };
 
-  // Calcular la duración en meses
   const getRangeDuration = () => {
     if (!customRange) return 0;
     
@@ -68,19 +66,30 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
     return monthsDiff;
   };
 
+  const handleCustomToggle = () => {
+    setIsCustomExpanded(!isCustomExpanded);
+  };
+
+  const handleViewModeChange = (mode: ViewMode) => {
+    // Si se selecciona modo personalizado, expandir automáticamente
+    if (mode === 'custom') {
+      setIsCustomExpanded(true);
+    } else {
+      setIsCustomExpanded(false);
+    }
+    onViewModeChange(mode);
+  };
+
   return (
-    <div className="time-selector">
-      <div className="time-controls">
-        {/* Selector de año - Deshabilitado en modo personalizado */}
+    <div className="time-selector compact">
+      <div className="time-controls-row">
+        {/* Selector de año */}
         <div className={`year-selector ${viewMode === 'custom' ? 'disabled' : ''}`}>
           <label htmlFor="year-select">Año:</label>
           <select
             id="year-select"
             value={currentYear}
-            onChange={(e) => {
-              console.log('TimeSelector: Year changed to:', e.target.value);
-              onYearChange(parseInt(e.target.value));
-            }}
+            onChange={(e) => onYearChange(parseInt(e.target.value))}
             disabled={viewMode === 'custom'}
             title={viewMode === 'custom' ? 'El año se selecciona individualmente en el rango personalizado' : ''}
           >
@@ -96,26 +105,26 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
           <div className="view-mode-buttons">
             <button
               className={`view-mode-btn ${viewMode === 'year' ? 'active' : ''}`}
-              onClick={() => onViewModeChange('year')}
+              onClick={() => handleViewModeChange('year')}
             >
               Anual
             </button>
             <button
               className={`view-mode-btn ${viewMode === 'quarter' ? 'active' : ''}`}
-              onClick={() => onViewModeChange('quarter')}
+              onClick={() => handleViewModeChange('quarter')}
             >
               Trimestral
             </button>
             <button
               className={`view-mode-btn ${viewMode === 'custom' ? 'active' : ''}`}
-              onClick={() => onViewModeChange('custom')}
+              onClick={() => handleViewModeChange('custom')}
             >
               Personalizada
             </button>
           </div>
         </div>
 
-        {/* Selector de trimestre - Deshabilitado en modo personalizado */}
+        {/* Selector de trimestre */}
         {viewMode === 'quarter' && (
           <div className="quarter-selector">
             <label>Trimestre:</label>
@@ -134,95 +143,89 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
           </div>
         )}
 
-        {/* Selector de rango personalizado */}
-        {viewMode === 'custom' && (
-          <div className="custom-range-selector">
-            <div className="custom-range-header">
-              <label>Rango personalizado:</label>
-              <div className="range-info">
-                <span className={`range-badge ${isCrossYearRange ? 'cross-year' : 'same-year'}`}>
-                  {isCrossYearRange ? '🌍 Rango entre años' : '📅 Rango en un año'}
-                </span>
-                <span className="range-duration">
-                  {getRangeDuration()} mes{getRangeDuration() !== 1 ? 'es' : ''}
-                </span>
-                {isCrossYearRange && (
-                  <span className="cross-year-info">
-                    ({customRange.startYear} → {customRange.endYear})
-                  </span>
-                )}
-              </div>
-            </div>
-            
-            <div className="custom-range-inputs">
-              <div className="range-input-group">
-                <label>Desde:</label>
-                <div className="month-year-inputs">
-                  <select
-                    value={customRange?.startMonth || 0}
-                    onChange={(e) => onCustomRangeChange({
-                      ...customRange!,
-                      startMonth: parseInt(e.target.value)
-                    })}
-                  >
-                    {months.map((month, index) => (
-                      <option key={index} value={index}>{month}</option>
-                    ))}
-                  </select>
-                  <select
-                    value={customRange?.startYear || currentYear}
-                    onChange={(e) => onCustomRangeChange({
-                      ...customRange!,
-                      startYear: parseInt(e.target.value)
-                    })}
-                  >
-                    {availableYears.map(year => (
-                      <option key={year} value={year}>{year}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="range-separator">
-                <span>hasta</span>
-              </div>
-
-              <div className="range-input-group">
-                <label>Hasta:</label>
-                <div className="month-year-inputs">
-                  <select
-                    value={customRange?.endMonth || 11}
-                    onChange={(e) => onCustomRangeChange({
-                      ...customRange!,
-                      endMonth: parseInt(e.target.value)
-                    })}
-                  >
-                    {months.map((month, index) => (
-                      <option key={index} value={index}>{month}</option>
-                    ))}
-                  </select>
-                  <select
-                    value={customRange?.endYear || currentYear}
-                    onChange={(e) => onCustomRangeChange({
-                      ...customRange!,
-                      endYear: parseInt(e.target.value)
-                    })}
-                  >
-                    {availableYears.map(year => (
-                      <option key={year} value={year}>{year}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            {/* Descripción del rango seleccionado */}
-            <div className="range-description">
-              <span className="range-text">{getRangeDescription()}</span>
-            </div>
+        {/* Resumen del rango personalizado (siempre visible) */}
+        {viewMode === 'custom' && customRange && (
+          <div className="custom-range-summary">
+            <span className="range-badge">
+              {getRangeDescription()} ({getRangeDuration()} mes{getRangeDuration() !== 1 ? 'es' : ''})
+            </span>
+            <button 
+              className="expand-toggle-btn"
+              onClick={handleCustomToggle}
+              title={isCustomExpanded ? 'Contraer filtros' : 'Expandir filtros'}
+            >
+              {isCustomExpanded ? '▼' : '▶'}
+            </button>
           </div>
         )}
       </div>
+
+      {/* Filtros expandibles solo cuando se necesiten */}
+      {viewMode === 'custom' && isCustomExpanded && (
+        <div className="custom-range-expanded">
+          <div className="custom-range-inputs">
+            <div className="range-input-group">
+              <label>Desde:</label>
+              <div className="month-year-inputs">
+                <select
+                  value={customRange?.startMonth || 0}
+                  onChange={(e) => onCustomRangeChange({
+                    ...customRange!,
+                    startMonth: parseInt(e.target.value)
+                  })}
+                >
+                  {months.map((month, index) => (
+                    <option key={index} value={index}>{month}</option>
+                  ))}
+                </select>
+                <select
+                  value={customRange?.startYear || currentYear}
+                  onChange={(e) => onCustomRangeChange({
+                    ...customRange!,
+                    startYear: parseInt(e.target.value)
+                  })}
+                >
+                  {availableYears.map(year => (
+                    <option key={year} value={year}>{year}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="range-separator">
+              <span>hasta</span>
+            </div>
+
+            <div className="range-input-group">
+              <label>Hasta:</label>
+              <div className="month-year-inputs">
+                <select
+                  value={customRange?.endMonth || 11}
+                  onChange={(e) => onCustomRangeChange({
+                    ...customRange!,
+                    endMonth: parseInt(e.target.value)
+                  })}
+                >
+                  {months.map((month, index) => (
+                    <option key={index} value={index}>{month}</option>
+                  ))}
+                </select>
+                <select
+                  value={customRange?.endYear || currentYear}
+                  onChange={(e) => onCustomRangeChange({
+                    ...customRange!,
+                    endYear: parseInt(e.target.value)
+                  })}
+                >
+                  {availableYears.map(year => (
+                    <option key={year} value={year}>{year}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

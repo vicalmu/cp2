@@ -47,6 +47,23 @@
   - Barras de progreso que muestran visualmente el porcentaje de capacidad
   - Colores dinámicos según el nivel de carga (verde, amarillo, naranja, rojo)
   - Transiciones suaves para mejor UX
+- **Problema de ancho de controles del Gantt SOLUCIONADO**:
+  - Los controles (`gantt-controls`) ahora tienen exactamente el mismo ancho que la tabla del Gantt
+  - El header del Gantt está perfectamente alineado con la tabla
+  - Todos los elementos mantienen coherencia visual y de usabilidad
+  - Los controles funcionan como un header natural de la tabla con los filtros aplicables
+
+**Cambios técnicos implementados**:
+- **`gantt-header.css`**: Ancho fijo `calc(300px + (var(--month-count, 12) * 120px))` para alineación perfecta
+- **`gantt-controls.css`**: Ancho calculado dinámicamente igual al de la tabla
+- **`gantt-main.css`**: Contenedor principal centrado con `display: flex` y `align-items: center`
+- **Responsive design**: Todos los breakpoints mantienen la coherencia de ancho
+
+**Resultado visual**:
+- ✅ Header negro alineado perfectamente con la tabla
+- ✅ Controles blancos con el mismo ancho que la tabla
+- ✅ Todo el contenido centrado horizontalmente
+- ✅ Usabilidad mejorada - controles funcionan como header natural de la tabla
 
 ### 🔧 Estructura de Archivos CSS del Gantt
 El CSS del Gantt ha sido dividido en módulos organizados por funcionalidad:

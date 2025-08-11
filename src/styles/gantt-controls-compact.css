@@ -1,0 +1,605 @@
+/* Estilos compactos para los controles del Gantt - Barra de filtros típica */
+.gantt-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: white;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+  width: calc(300px + (var(--month-count, 12) * 120px));
+  min-width: 1200px; /* Ancho mínimo para evitar reducción drástica */
+  max-width: 100%;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Fila principal de controles - siempre visible */
+.controls-main-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Controles izquierdos */
+.controls-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Controles derechos */
+.controls-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Selector de año compacto */
+.year-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+  color: #374151;
+  transition: border-color 0.2s ease;
+  min-width: 80px;
+}
+
+.year-selector:hover,
+.year-selector:focus {
+  border-color: #667eea;
+  outline: none;
+}
+
+.year-selector.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.year-selector label {
+  font-weight: 500;
+  font-size: 12px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.year-selector select {
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  color: #374151;
+  cursor: pointer;
+  min-width: 60px;
+}
+
+.year-selector select:disabled {
+  cursor: not-allowed;
+  color: #9ca3af;
+}
+
+/* Selector de modo de vista compacto */
+.view-mode-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.view-mode-selector label {
+  font-weight: 500;
+  font-size: 12px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.view-mode-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.view-mode-btn {
+  background: #f8fafc;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 12px;
+  white-space: nowrap;
+  min-width: 60px;
+}
+
+.view-mode-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.view-mode-btn.active {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+/* Selector de trimestre compacto */
+.quarter-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quarter-selector label {
+  font-weight: 500;
+  font-size: 12px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.quarter-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.quarter-btn {
+  background: #f8fafc;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 11px;
+  min-width: 40px;
+}
+
+.quarter-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.quarter-btn.active {
+  background: #10b981;
+  color: white;
+  border-color: #10b981;
+}
+
+/* Resumen del rango personalizado */
+.custom-range-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.range-badge {
+  background: #f0f9ff;
+  color: #0369a1;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid #bae6fd;
+}
+
+/* Botón de expandir/contraer */
+.expand-toggle-btn {
+  background: #f8fafc;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  padding: 4px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 10px;
+  min-width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expand-toggle-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+/* Panel de filtros compacto */
+.filter-panel.compact {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+
+.filter-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.filter-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-label {
+  font-weight: 500;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.filter-count {
+  font-size: 12px;
+  color: #374151;
+  font-weight: 500;
+}
+
+.filter-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-btn.compact {
+  background: #f8fafc;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.filter-btn.compact:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.filter-btn.compact.active {
+  background: #10b981;
+  color: white;
+  border-color: #10b981;
+}
+
+/* Filtros expandibles */
+.department-filters-expanded {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.department-filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+.department-filter-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 12px;
+}
+
+.department-filter-item:hover {
+  background: #f8fafc;
+}
+
+.department-filter-item input[type="checkbox"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+.department-name {
+  font-weight: 500;
+  color: #374151;
+}
+
+.department-count {
+  color: #6b7280;
+  font-size: 11px;
+}
+
+/* Selector de tiempo compacto */
+.time-selector.compact {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+
+.time-controls-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Rango personalizado expandido */
+.custom-range-expanded {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.custom-range-inputs {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.range-input-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.range-input-group label {
+  font-weight: 500;
+  font-size: 12px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.month-year-inputs {
+  display: flex;
+  gap: 4px;
+}
+
+.month-year-inputs select {
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 12px;
+  background: white;
+  color: #374151;
+  cursor: pointer;
+  min-width: 80px;
+}
+
+.month-year-inputs select:hover {
+  border-color: #9ca3af;
+}
+
+.month-year-inputs select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+}
+
+.range-separator {
+  display: flex;
+  align-items: center;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* MultiSelectDropdown compacto */
+.multi-select-dropdown.compact {
+  position: relative;
+}
+
+.dropdown-trigger.compact {
+  background: #f8fafc;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  min-width: 120px;
+}
+
+.dropdown-trigger.compact:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.dropdown-text {
+  font-size: 12px;
+}
+
+.dropdown-arrow {
+  transition: transform 0.2s ease;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu.compact {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  min-width: 280px;
+  z-index: 1000;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.dropdown-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-header h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.dropdown-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.action-btn.compact {
+  background: #f8fafc;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-btn.compact:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.action-btn.compact.select-all:hover {
+  background: #10b981;
+  color: white;
+  border-color: #10b981;
+}
+
+.dropdown-items {
+  padding: 8px 0;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 12px;
+}
+
+.dropdown-item:hover {
+  background: #f8fafc;
+}
+
+.dropdown-item input[type="checkbox"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+.item-text {
+  flex: 1;
+  font-weight: 500;
+  color: #374151;
+}
+
+.item-count {
+  color: #6b7280;
+  font-size: 11px;
+}
+
+.dropdown-footer {
+  padding: 8px 16px;
+  border-top: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+.selection-summary {
+  font-size: 11px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .gantt-controls {
+    width: 100%;
+    max-width: none;
+  }
+  
+  .controls-main-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .gantt-controls {
+    padding: 12px 16px;
+  }
+  
+  .controls-left,
+  .controls-right {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  
+  .time-controls-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  
+  .custom-range-inputs {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .dropdown-menu.compact {
+    right: auto;
+    left: 0;
+    min-width: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gantt-controls {
+    padding: 10px 12px;
+  }
+  
+  .view-mode-buttons {
+    flex-wrap: wrap;
+  }
+  
+  .quarter-buttons {
+    flex-wrap: wrap;
+  }
+  
+  .dropdown-menu.compact {
+    min-width: 200px;
+  }
+}
