@@ -70,6 +70,16 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
     setIsCustomExpanded(!isCustomExpanded);
   };
 
+  const handleViewModeChange = (mode: ViewMode) => {
+    // Si se selecciona modo personalizado, expandir automáticamente
+    if (mode === 'custom') {
+      setIsCustomExpanded(true);
+    } else {
+      setIsCustomExpanded(false);
+    }
+    onViewModeChange(mode);
+  };
+
   return (
     <div className="time-selector compact">
       <div className="time-controls-row">
@@ -95,19 +105,19 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
           <div className="view-mode-buttons">
             <button
               className={`view-mode-btn ${viewMode === 'year' ? 'active' : ''}`}
-              onClick={() => onViewModeChange('year')}
+              onClick={() => handleViewModeChange('year')}
             >
               Anual
             </button>
             <button
               className={`view-mode-btn ${viewMode === 'quarter' ? 'active' : ''}`}
-              onClick={() => onViewModeChange('quarter')}
+              onClick={() => handleViewModeChange('quarter')}
             >
               Trimestral
             </button>
             <button
               className={`view-mode-btn ${viewMode === 'custom' ? 'active' : ''}`}
-              onClick={handleCustomToggle}
+              onClick={() => handleViewModeChange('custom')}
             >
               Personalizada
             </button>
