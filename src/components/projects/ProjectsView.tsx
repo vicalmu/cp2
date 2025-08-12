@@ -24,6 +24,7 @@ const ProjectsView: React.FC = () => {
     mockDepartments.map(dept => dept.id)
   );
   const [searchTerm, setSearchTerm] = useState('');
+  const [expandedProjects, setExpandedProjects] = useState<Set<string>>(new Set());
 
   // Filtrar proyectos
   const filteredProjects = useMemo(() => {
@@ -53,8 +54,6 @@ const ProjectsView: React.FC = () => {
     'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
     'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
   ];
-
-  const [expandedProjects, setExpandedProjects] = useState<Set<string>>(new Set());
 
   const toggleProjectExpansion = (projectId: string) => {
     const newExpanded = new Set(expandedProjects);
@@ -130,58 +129,60 @@ const ProjectsView: React.FC = () => {
         </div>
       </div>
 
-      {/* Barra de filtros clonada del Gantt */}
-      <div className="gantt-controls">
-        <div className="controls-main-row">
-          <div className="controls-left">
-            <TimeSelector
-              currentYear={currentYear}
-              viewMode={viewMode}
-              selectedQuarter={selectedQuarter}
-              customRange={customRange}
-              onViewModeChange={handleViewModeChange}
-              onYearChange={handleYearChange}
-              onQuarterChange={handleQuarterChange}
-              onCustomRangeChange={handleCustomRangeChange}
-            />
-            
-            <div className="filter-group">
-              <label htmlFor="search-input">Buscar:</label>
-              <input
-                id="search-input"
-                type="text"
-                placeholder="Nombre del proyecto..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="filter-input"
-              />
+      {/* Tabla profesional con sticky real */}
+      <div className="projects-table-wrapper">
+        {/* Filtros sticky */}
+        <div className="filters-section">
+          <div className="gantt-controls">
+            <div className="controls-main-row">
+              <div className="controls-left">
+                <TimeSelector
+                  currentYear={currentYear}
+                  viewMode={viewMode}
+                  selectedQuarter={selectedQuarter}
+                  customRange={customRange}
+                  onViewModeChange={handleViewModeChange}
+                  onYearChange={handleYearChange}
+                  onQuarterChange={handleQuarterChange}
+                  onCustomRangeChange={handleCustomRangeChange}
+                />
+                
+                <div className="filter-group">
+                  <label htmlFor="search-input">Buscar:</label>
+                  <input
+                    id="search-input"
+                    type="text"
+                    placeholder="Nombre del proyecto..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="filter-input"
+                  />
+                </div>
+              </div>
+              
+              <div className="controls-right">
+                <MultiSelectDropdown
+                  departments={mockDepartments}
+                  selectedDepartments={selectedDepartments}
+                  onSelectionChange={setSelectedDepartments}
+                />
+                
+                <button 
+                  onClick={() => {
+                    setSearchTerm('');
+                    setSelectedDepartments(mockDepartments.map(dept => dept.id));
+                  }}
+                  className="btn btn-outline"
+                >
+                  🔄 Limpiar
+                </button>
+              </div>
             </div>
           </div>
-          
-          <div className="controls-right">
-            <MultiSelectDropdown
-              departments={mockDepartments}
-              selectedDepartments={selectedDepartments}
-              onSelectionChange={setSelectedDepartments}
-            />
-            
-            <button 
-              onClick={() => {
-                setSearchTerm('');
-                setSelectedDepartments(mockDepartments.map(dept => dept.id));
-              }}
-              className="btn btn-outline"
-            >
-              🔄 Limpiar
-            </button>
-          </div>
         </div>
-      </div>
 
-      {/* Tabla profesional rediseñada */}
-      <div className="projects-table-wrapper">
         <div className="table-container">
-          {/* Header de la tabla */}
+          {/* Header de la tabla sticky */}
           <div className="table-header">
             <div className="project-column-header">
               <span className="header-title">Proyectos</span>

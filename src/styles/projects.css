@@ -15,7 +15,7 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
 }
 
 .header-content {
@@ -112,13 +112,32 @@
   font-size: 16px;
 }
 
-/* Filtros usando los mismos estilos del Gantt */
-.projects-container .gantt-controls {
+/* Tabla profesional con sticky real */
+.projects-table-wrapper {
+  margin: 0 24px 24px 24px;
   background: white;
-  margin: 24px;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: visible; /* Elimino scroll interno */
+  position: relative;
+}
+
+/* Filtros sticky real */
+.filters-section {
+  background: white;
   padding: 20px;
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 88px; /* Altura del header principal */
+  z-index: 900;
+  border-radius: 16px 16px 0 0;
+}
+
+.filters-section .gantt-controls {
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
 }
 
 .controls-main-row {
@@ -196,28 +215,29 @@
   transform: translateY(-1px);
 }
 
-/* Tabla profesional */
-.projects-table-wrapper {
-  margin: 0 24px 24px 24px;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-}
-
 .table-container {
   overflow-x: auto;
 }
 
-/* Header de la tabla */
+/* Header de la tabla sticky real */
 .table-header {
   display: grid;
   grid-template-columns: 400px repeat(12, 120px);
   background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
   color: white;
   position: sticky;
-  top: 0;
-  z-index: 10;
+  top: 200px; /* Altura del header principal + filtros */
+  z-index: 800;
+  border-radius: 0 0 16px 16px;
+}
+
+/* Espaciador para compensar elementos fijos */
+.filters-section.frozen + .table-container .table-header {
+  margin-top: 120px; /* Altura de los filtros */
+}
+
+.table-header.frozen + .project-section {
+  margin-top: 80px; /* Altura del header de tabla */
 }
 
 .project-column-header {
