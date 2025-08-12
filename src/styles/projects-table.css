@@ -1,0 +1,212 @@
+/* Estilos para la tabla de proyectos estilo Gantt */
+
+.projects-table-container {
+  margin: 20px;
+  overflow-x: auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.projects-table {
+  min-width: 1200px;
+  border-collapse: collapse;
+}
+
+/* Header de la tabla */
+.projects-table-header {
+  display: grid;
+  grid-template-columns: 300px repeat(12, 120px);
+  background: #1e293b;
+  color: white;
+  font-weight: 600;
+  border-radius: 8px 8px 0 0;
+}
+
+.project-name-header {
+  padding: 16px;
+  border-right: 1px solid #334155;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.month-header {
+  padding: 16px 8px;
+  text-align: center;
+  border-right: 1px solid #334155;
+  font-size: 12px;
+  min-width: 120px;
+}
+
+.month-header:last-child {
+  border-right: none;
+}
+
+/* Filas de proyectos */
+.project-row {
+  display: grid;
+  grid-template-columns: 300px repeat(12, 120px);
+  border-bottom: 1px solid #e2e8f0;
+  transition: background-color 0.2s ease;
+}
+
+.project-row:hover {
+  background-color: #f8fafc;
+}
+
+.project-row:last-child {
+  border-bottom: none;
+}
+
+/* Celda del nombre del proyecto */
+.project-name-cell {
+  padding: 16px;
+  border-right: 1px solid #e2e8f0;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+}
+
+.project-info {
+  width: 100%;
+}
+
+.project-name {
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.project-details {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.project-hours,
+.project-dates {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.project-hours {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.project-dates {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+/* Celdas de meses */
+.month-cell {
+  padding: 8px;
+  border-right: 1px solid #e2e8f0;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.month-cell:last-child {
+  border-right: none;
+}
+
+/* Lista de departamentos en cada mes */
+.departments-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.department-item {
+  background: #f1f5f9;
+  border-radius: 4px;
+  padding: 6px 8px;
+  border-left: 3px solid #3b82f6;
+  font-size: 11px;
+  text-align: center;
+}
+
+.dept-name {
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 2px;
+}
+
+.dept-hours {
+  color: #64748b;
+  font-size: 10px;
+}
+
+.dept-percentage {
+  color: #059669;
+  font-weight: 600;
+  font-size: 10px;
+}
+
+/* Sin asignación */
+.no-allocation {
+  color: #94a3b8;
+  font-style: italic;
+  font-size: 12px;
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+  .projects-table-container {
+    margin: 10px;
+  }
+  
+  .projects-table {
+    min-width: 1000px;
+  }
+  
+  .projects-table-header,
+  .project-row {
+    grid-template-columns: 250px repeat(12, 100px);
+  }
+  
+  .project-name-header,
+  .project-name-cell {
+    padding: 12px;
+  }
+  
+  .month-header,
+  .month-cell {
+    min-width: 100px;
+    padding: 12px 6px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .projects-table {
+    min-width: 800px;
+  }
+  
+  .projects-table-header,
+  .project-row {
+    grid-template-columns: 200px repeat(12, 80px);
+  }
+  
+  .month-header,
+  .month-cell {
+    min-width: 80px;
+    padding: 8px 4px;
+  }
+  
+  .project-name {
+    font-size: 13px;
+  }
+  
+  .department-item {
+    padding: 4px 6px;
+    font-size: 10px;
+  }
+}
