@@ -127,7 +127,6 @@ code {
     rgba(245, 158, 11, 0.03) 100%);
 }
 
-.projects-header,
 .simulator-header {
   position: relative;
   z-index: 1;
@@ -137,12 +136,11 @@ code {
   margin: 0 auto;
 }
 
-.projects-header h1,
 .simulator-header h1 {
   font-size: var(--font-size-4xl);
   font-weight: 700;
   margin-bottom: var(--spacing-6);
-  background: linear-gradient(135deg, var(--success-color), var(--primary-color));
+  background: linear-gradient(135deg, var(--warning-color), var(--error-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -155,7 +153,6 @@ code {
   background-clip: text;
 }
 
-.projects-header p,
 .simulator-header p {
   font-size: var(--font-size-xl);
   color: var(--gray-600);

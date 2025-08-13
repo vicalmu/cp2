@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProjects } from '../../context/ProjectsContext';
 import { mockDepartments } from '../../data/mockData';
@@ -86,6 +86,27 @@ const ProjectsView: React.FC = () => {
     setCustomRange(range);
   };
 
+  // JavaScript sticky como en tu ejemplo
+  useEffect(() => {
+    const header = document.getElementById("stickyHeader");
+    if (!header) return;
+
+    const sticky = header.offsetTop;
+
+    const myFunction = () => {
+      if (window.pageYOffset > sticky) {
+        header.classList.add("sticky");
+      } else {
+        header.classList.remove("sticky");
+      }
+    };
+
+    window.onscroll = myFunction;
+    return () => {
+      window.onscroll = null;
+    };
+  }, []);
+
   if (loading) {
     return (
       <div className="projects-container">
@@ -99,7 +120,7 @@ const ProjectsView: React.FC = () => {
 
   return (
     <div className="projects-container">
-      {/* Header profesional estilo Gantt */}
+      {/* Header compacto */}
       <div className="projects-header">
         <div className="header-content">
           <div className="header-left">
@@ -129,73 +150,73 @@ const ProjectsView: React.FC = () => {
         </div>
       </div>
 
-      {/* Tabla profesional con sticky real */}
-      <div className="projects-table-wrapper">
-        {/* Filtros sticky */}
-        <div className="filters-section">
-          <div className="gantt-controls">
-            <div className="controls-main-row">
-              <div className="controls-left">
-                <TimeSelector
-                  currentYear={currentYear}
-                  viewMode={viewMode}
-                  selectedQuarter={selectedQuarter}
-                  customRange={customRange}
-                  onViewModeChange={handleViewModeChange}
-                  onYearChange={handleYearChange}
-                  onQuarterChange={handleQuarterChange}
-                  onCustomRangeChange={handleCustomRangeChange}
-                />
-                
-                <div className="filter-group">
-                  <label htmlFor="search-input">Buscar:</label>
-                  <input
-                    id="search-input"
-                    type="text"
-                    placeholder="Nombre del proyecto..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="filter-input"
-                  />
-                </div>
-              </div>
+      {/* Header sticky (barra de filtros) */}
+      <div className="header" id="stickyHeader">
+        <div className="gantt-controls">
+          <div className="controls-main-row">
+            <div className="controls-left">
+              <TimeSelector
+                currentYear={currentYear}
+                viewMode={viewMode}
+                selectedQuarter={selectedQuarter}
+                customRange={customRange}
+                onViewModeChange={handleViewModeChange}
+                onYearChange={handleYearChange}
+                onQuarterChange={handleQuarterChange}
+                onCustomRangeChange={handleCustomRangeChange}
+              />
               
-              <div className="controls-right">
-                <MultiSelectDropdown
-                  departments={mockDepartments}
-                  selectedDepartments={selectedDepartments}
-                  onSelectionChange={setSelectedDepartments}
+              <div className="filter-group">
+                <label htmlFor="search-input">Buscar:</label>
+                <input
+                  id="search-input"
+                  type="text"
+                  placeholder="Nombre del proyecto..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="filter-input"
                 />
-                
-                <button 
-                  onClick={() => {
-                    setSearchTerm('');
-                    setSelectedDepartments(mockDepartments.map(dept => dept.id));
-                  }}
-                  className="btn btn-outline"
-                >
-                  🔄 Limpiar
-                </button>
               </div>
+            </div>
+            
+            <div className="controls-right">
+              <MultiSelectDropdown
+                departments={mockDepartments}
+                selectedDepartments={selectedDepartments}
+                onSelectionChange={setSelectedDepartments}
+              />
+              
+                             <button 
+                 onClick={() => {
+                   setSearchTerm('');
+                   setSelectedDepartments(mockDepartments.map(dept => dept.id));
+                 }}
+                 className="btn btn-outline"
+               >
+                 🔄 Limpiar
+               </button>
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="table-container">
-          {/* Header de la tabla sticky */}
-          <div className="table-header">
-            <div className="project-column-header">
-              <span className="header-title">Proyectos</span>
-              <span className="header-subtitle">Información y controles</span>
-            </div>
-            {months.map((month, index) => (
-              <div key={index} className="month-column-header">
-                <span className="month-name">{month}</span>
-                <span className="month-abbr">{monthAbbr[index]}</span>
-              </div>
-            ))}
+      {/* Header de meses */}
+      <div className="table-header">
+        <div className="project-column-header">
+          <span className="header-title">Proyectos</span>
+          <span className="header-subtitle">Información y controles</span>
+        </div>
+        {months.map((month, index) => (
+          <div key={index} className="month-column-header">
+            <span className="month-name">{month}</span>
+            <span className="month-abbr">{monthAbbr[index]}</span>
           </div>
+        ))}
+      </div>
 
+      {/* Tabla de proyectos */}
+      <div className="projects-table-wrapper">
+        <div className="table-container">
           {/* Filas de proyectos */}
           {filteredProjects.map((project) => (
             <div key={project.id} className="project-section">
@@ -215,8 +236,7 @@ const ProjectsView: React.FC = () => {
                       <div className="meta-item">
                         <span className="meta-icon">📅</span>
                         <span className="meta-value">
-                          {project.startDate.toLocaleDateString('es-ES', { month: 'short', year: 'numeric' })} - 
-                          {project.endDate.toLocaleDateString('es-ES', { month: 'short', year: 'numeric' })}
+                          {project.startDate.toLocaleDateString('es-ES', { month: 'short', year: 'numeric' })} - {project.endDate.toLocaleDateString('es-ES', { month: 'short', year: 'numeric' })}
                         </span>
                       </div>
                     </div>

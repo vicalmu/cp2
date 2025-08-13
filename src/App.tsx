@@ -4,6 +4,7 @@ import { ProjectsProvider } from './context/ProjectsContext';
 import HomeView from './components/home/HomeView';
 import GanttView from './components/gantt/GanttView';
 import ProjectsView from './components/projects/ProjectsView';
+import TestView from './components/test/TestView';
 import './styles/global.css';
 import './styles/home.css';
 import './styles/gantt.css';
@@ -20,6 +21,7 @@ const App: React.FC = () => {
             <Route path="/" element={<HomeView />} />
             <Route path="/gantt" element={<GanttView />} />
             <Route path="/proyectos" element={<ProjectsView />} />
+            <Route path="/test" element={<TestView />} />
             <Route path="/simulador" element={
               <div className="simulator-container">
                 <div className="simulator-header">
