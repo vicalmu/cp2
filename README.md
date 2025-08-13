@@ -586,20 +586,25 @@ src/
 
 **PRÓXIMOS PASOS SUGERIDOS**:
 
-#### **1. Implementar Sticky en Proyectos** (Prioridad Alta)
-- Usar la lógica de `/test` como referencia
-- Aplicar sticky behavior a filtros y header de tabla
-- Mantener la misma funcionalidad sin separación
+#### **1. IMPLEMENTAR STICKY BEHAVIOR EN TODA LA HERRAMIENTA** (Prioridad MÁXIMA)
+- **Objetivo**: Aplicar comportamiento sticky a todas las barras de filtros y barras de meses
+- **Alcance**: Gantt, Proyectos, y futuras vistas (Simulador, etc.)
+- **Referencia**: Usar la lógica perfecta de `/test` como base
+- **Componentes afectados**:
+  - **Vista Gantt**: Filtros + Header de meses
+  - **Vista Proyectos**: Filtros + Header de tabla
+  - **Futuras vistas**: Cualquier barra de filtros o meses que se implemente
 
 #### **2. Simulador Inteligente** (Prioridad Media)
 - Implementar tercera vista principal
 - Simulación de impacto de nuevos proyectos
 - Análisis de capacidad y recursos
+- **Incluir sticky behavior** desde el inicio
 
 #### **3. Mejoras de UX** (Prioridad Baja)
-- Implementar comportamiento sticky para filtros y header de tabla
 - Mejorar navegación entre proyectos
 - Agregar más opciones de visualización
+- Optimizar rendimiento de tablas grandes
 
 **INSTRUCCIONES PARA CONTINUAR**:
 
@@ -623,6 +628,57 @@ src/
 - ✅ JavaScript local funcional
 
 **Próximo objetivo**: Implementar el mismo sticky behavior en la vista de proyectos usando `/test` como referencia
+
+---
+
+### 🎯 **PLAN DE IMPLEMENTACIÓN STICKY BEHAVIOR EN TODA LA HERRAMIENTA**
+
+#### **FASE 1: Vista de Proyectos** (Prioridad MÁXIMA)
+- **Componente**: `src/components/projects/ProjectsView.tsx`
+- **Elementos sticky**:
+  - **Barra de filtros**: Filtros de búsqueda, departamentos, fechas, etc.
+  - **Header de tabla**: Nombres de columnas (Proyectos, Ene, Feb, Mar...)
+- **Implementación**: Usar lógica de `/test` con clases únicas `sticky-filters` y `sticky-header`
+- **Comportamiento**: Filtros se pegan arriba, header de tabla se pega debajo de filtros
+
+#### **FASE 2: Vista de Gantt** (Prioridad ALTA)
+- **Componente**: `src/components/gantt/GanttView.tsx`
+- **Elementos sticky**:
+  - **Barra de filtros**: TimeSelector + MultiSelectDropdown + FilterPanel
+  - **Header de meses**: Ene, Feb, Mar, Abr... (columnas del Gantt)
+- **Implementación**: Adaptar lógica de `/test` para controles del Gantt
+- **Comportamiento**: Filtros se pegan arriba, meses se pegan debajo de filtros
+
+#### **FASE 3: Futuras Vistas** (Prioridad MEDIA)
+- **Simulador Inteligente**: Implementar sticky behavior desde el inicio
+- **Otras vistas**: Cualquier barra de filtros o meses que se agregue
+- **Estándar**: Todas las vistas deben seguir el mismo patrón sticky
+
+#### **ESTÁNDARES TÉCNICOS A IMPLEMENTAR**:
+
+##### **A. Clases CSS Únicas por Vista**
+- **Proyectos**: `sticky-filters-projects`, `sticky-header-projects`
+- **Gantt**: `sticky-filters-gantt`, `sticky-header-gantt`
+- **Simulador**: `sticky-filters-simulator`, `sticky-header-simulator`
+
+##### **B. Comportamiento Sticky Consistente**
+- **Filtros**: Se pegan en `top: 0` al hacer scroll
+- **Headers**: Se pegan debajo de filtros (ej: `top: 80px`) sin separación
+- **Contenido**: Se ajusta automáticamente para no quedar oculto
+- **Reversible**: Al volver arriba todo vuelve a su posición
+
+##### **C. Implementación Técnica**
+- **CSS inline** o **módulos específicos** por vista
+- **JavaScript local** dentro de cada componente
+- **Clases únicas** para evitar conflictos entre vistas
+- **`!important`** para asegurar prioridad sobre CSS global
+
+#### **BENEFICIOS DE LA IMPLEMENTACIÓN**:
+- ✅ **UX mejorada**: Usuarios nunca pierden de vista filtros ni headers
+- ✅ **Consistencia**: Mismo comportamiento en toda la herramienta
+- ✅ **Profesional**: Interfaz tipo Excel "Freeze Panes"
+- ✅ **Escalable**: Patrón reutilizable para futuras vistas
+- ✅ **Independiente**: Cada vista mantiene su funcionalidad sin interferencias
 
 **ESTADO ACTUAL DEL STICKY**:
 

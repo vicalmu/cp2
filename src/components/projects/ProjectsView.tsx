@@ -86,25 +86,39 @@ const ProjectsView: React.FC = () => {
     setCustomRange(range);
   };
 
-  // JavaScript sticky como en tu ejemplo
+  // JavaScript sticky behavior - con cálculo dinámico de posiciones
   useEffect(() => {
-    const header = document.getElementById("stickyHeader");
-    if (!header) return;
-
-    const sticky = header.offsetTop;
-
-    const myFunction = () => {
-      if (window.pageYOffset > sticky) {
-        header.classList.add("sticky");
-      } else {
-        header.classList.remove("sticky");
+    const handleScroll = () => {
+      const filtersHeader = document.getElementById('stickyFilters');
+      const monthsHeader = document.getElementById('stickyMonths');
+      
+      if (filtersHeader && monthsHeader) {
+        const stickyFilters = filtersHeader.offsetTop;
+        const stickyMonths = monthsHeader.offsetTop;
+        
+        // Filtros sticky
+        if (window.pageYOffset > stickyFilters) {
+          filtersHeader.classList.add('sticky1');
+          
+          // Calcular posición dinámica para el header de meses
+          const filtersHeight = filtersHeader.offsetHeight;
+          monthsHeader.style.top = `${filtersHeight}px`;
+        } else {
+          filtersHeader.classList.remove('sticky1');
+          monthsHeader.style.top = '';
+        }
+        
+        // Header de meses sticky
+        if (window.pageYOffset > stickyMonths) {
+          monthsHeader.classList.add('sticky2');
+        } else {
+          monthsHeader.classList.remove('sticky2');
+        }
       }
     };
 
-    window.onscroll = myFunction;
-    return () => {
-      window.onscroll = null;
-    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   if (loading) {
@@ -151,7 +165,7 @@ const ProjectsView: React.FC = () => {
       </div>
 
       {/* Header sticky (barra de filtros) */}
-      <div className="header" id="stickyHeader">
+      <div className="header" id="stickyFilters">
         <div className="gantt-controls">
           <div className="controls-main-row">
             <div className="controls-left">
@@ -201,7 +215,7 @@ const ProjectsView: React.FC = () => {
       </div>
 
       {/* Header de meses */}
-      <div className="table-header">
+      <div className="table-header" id="stickyMonths">
         <div className="project-column-header">
           <span className="header-title">Proyectos</span>
           <span className="header-subtitle">Información y controles</span>
@@ -330,6 +344,36 @@ const ProjectsView: React.FC = () => {
           ))}
         </div>
       </div>
+
+      {/* Estilos CSS inline para sticky behavior - simple y funcional como /test */}
+      <style>{`
+        .sticky1 {
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 100% !important;
+          z-index: 1000 !important;
+          background: white !important;
+        }
+        
+        .sticky2 {
+          position: fixed !important;
+          left: 0 !important;
+          width: 100% !important;
+          z-index: 1000 !important;
+          background: white !important;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        /* Ajustar contenido cuando los headers están sticky */
+        .sticky1 ~ .table-header {
+          margin-top: 80px !important;
+        }
+        
+        .sticky1 + .sticky2 ~ .projects-table-wrapper {
+          margin-top: 160px !important;
+        }
+      `}</style>
     </div>
   );
 };
