@@ -2,6 +2,8 @@
 
 ## 🎯 **ESTADO ACTUAL DEL PROYECTO**
 
+**PUNTO DE CONTROL: Look & feel homogéneo implementado - indicador de año y filtros unificados**
+
 ### **✅ FUNCIONANDO PERFECTAMENTE:**
 - **Sticky Headers**: Filtros en `top: 0` y `thead` en `top: 71px`
 - **Página `/gantt`**: Tabla con 25 departamentos y porcentajes mensuales
@@ -12,6 +14,8 @@
 - **Marca del Mes Actual**: Agosto marcado visualmente con bordes sutiles
 - **Filtro de Meses**: Selector de "Mes desde" con rango dinámico de 12 meses
 - **Filtro de Departamento**: Multiselect funcional con contador y cierre automático
+- **Look & Feel Homogéneo**: Ambos filtros tienen el mismo diseño visual
+- **Indicador de Año**: Año aparece debajo de "Ene" cuando cambia de año
 
 ### **🔧 IMPLEMENTADO EN ESTA SESIÓN:**
 - **Barras de Proyecto**: Función `renderProjectBar` con posicionamiento absoluto y gradientes
@@ -20,6 +24,8 @@
 - **Filtro de Departamento Multiselect**: Dropdown funcional con checkboxes y filtrado en tiempo real
 - **Cierre Automático**: Dropdown se cierra al hacer click fuera del componente
 - **Sistema de Filtrado**: Estado `selectedDepartments` que filtra la tabla dinámicamente
+- **Look & Feel Homogéneo**: Selector de meses con mismo diseño que departamentos
+- **Indicador de Año**: Año aparece debajo de "Ene" cuando cambia de año
 
 ### **📊 FUNCIONALIDADES IMPLEMENTADAS:**
 1. **Barras de Proyecto**: 
@@ -44,6 +50,18 @@
    - Filtrado en tiempo real de la tabla
    - Botón limpiar individual y global
    - Cierre automático al click fuera
+
+5. **Look & Feel Homogéneo**:
+   - Ambos filtros tienen el mismo diseño visual
+   - Mismo estilo de botón, bordes, padding y colores
+   - Misma altura (38px) y ancho (300px)
+   - Consistencia visual entre todos los filtros
+
+6. **Indicador de Año**:
+   - Año aparece debajo de "Ene" cuando cambia de año
+   - Estilo sutil: fuente pequeña (10px) y color gris (#666)
+   - No afecta el espacio vertical de los headers
+   - Clara indicación visual del cambio de año
 
 ### **🎨 CARACTERÍSTICAS TÉCNICAS:**
 - **React 18 + TypeScript**: Componente funcional con hooks avanzados
@@ -89,6 +107,7 @@
 2. **Activar Filtros Mockup**: Implementar funcionalidad real para "Buscar" y "Estado"
 3. **Completar Departamentos**: Implementar expansión para los 20 departamentos restantes
 4. **Mejorar Gantt**: Barras de proyecto más avanzadas y cálculo de capacidad
+5. **Refinamientos UI**: Mejorar la experiencia visual y de usuario
 
 ---
 
@@ -98,6 +117,15 @@
 - **Estado**: React hooks (useState, useEffect)
 - **Routing**: React Router DOM
 - **Build**: Create React App
+
+---
+
+## 📝 **HISTORIAL DE COMMITS:**
+- **Commit 1**: PUNTO DE CONTROL: Sticky Headers FUNCIONANDO
+- **Commit 2**: PUNTO DE CONTROL: 25 departamentos implementados - sticky headers funcionando
+- **Commit 3**: PUNTO DE CONTROL: Líneas desplegables implementadas - 5 departamentos con proyectos expandibles
+- **Commit 4**: PUNTO DE CONTROL: Filtro de departamento multiselect implementado - barras de proyecto y filtros avanzados funcionando
+- **Commit 5**: PUNTO DE CONTROL: Look & feel homogéneo implementado - indicador de año y filtros unificados
 
 ---
 
