@@ -209,7 +209,7 @@ const GanttView: React.FC = () => {
                   borderRadius: '8px',
                   padding: '10px 16px',
                   minHeight: '42px',
-                  background: 'white',
+                  background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
@@ -353,7 +353,7 @@ const GanttView: React.FC = () => {
                   borderRadius: '8px',
                   padding: '10px 16px',
                   minHeight: '42px',
-                  background: 'white',
+                  background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
@@ -492,15 +492,17 @@ const GanttView: React.FC = () => {
                     <button 
                       onClick={toggleAllDepartments}
                       style={{
-                        background: '#2E5B9E',
+                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                         color: 'white',
-                        border: 'none',
-                        width: '30px',
-                        height: '30px',
+                        width: '32px',
+                        height: '32px',
                         borderRadius: '50%',
                         cursor: 'pointer',
                         fontSize: '18px',
-                        fontWeight: 'bold'
+                        fontWeight: '600',
+                        boxShadow: '0 3px 12px rgba(102, 126, 234, 0.3)',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        border: '1px solid rgba(255,255,255,0.2)'
                       }}
                     >
                       {expandedDepartments.length === 25 ? '−' : '+'}
@@ -537,15 +539,17 @@ const GanttView: React.FC = () => {
                         <button 
                           onClick={() => toggleDepartment(deptIndex)}
                           style={{
-                            background: '#6c757d',
+                            background: 'linear-gradient(135deg, #6c757d 0%, #495057 100%)',
                             color: 'white',
-                            border: 'none',
-                            width: '24px',
-                            height: '24px',
+                            width: '26px',
+                            height: '26px',
                             borderRadius: '50%',
                             cursor: 'pointer',
                             fontSize: '14px',
-                            fontWeight: 'bold'
+                            fontWeight: '600',
+                            boxShadow: '0 2px 8px rgba(108, 117, 125, 0.3)',
+                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                            border: '1px solid rgba(255,255,255,0.2)'
                           }}
                         >
                           {expandedDepartments.includes(deptIndex) ? '−' : '+'}
