@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './GanttView.css';
+import '../../styles/gantt-base.css';
 
 const GanttView: React.FC = () => {
   // Estado para controlar expansión de departamentos
@@ -507,20 +508,15 @@ const GanttView: React.FC = () => {
             <thead>
               <tr>
                 <th>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div className="gantt-flex gantt-flex-center" style={{ gap: '10px' }}>
                     <button 
                       onClick={toggleAllDepartments}
+                      className="gantt-bg-primary gantt-text-white gantt-cursor-pointer gantt-font-bold gantt-shadow-medium gantt-transition"
                       style={{
-                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                        color: 'white',
                         width: '32px',
                         height: '32px',
                         borderRadius: '50%',
-                        cursor: 'pointer',
                         fontSize: '18px',
-                        fontWeight: '600',
-                        boxShadow: '0 3px 12px rgba(102, 126, 234, 0.3)',
-                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                         border: '1px solid rgba(255,255,255,0.2)'
                       }}
                       onMouseEnter={(e) => {
@@ -539,16 +535,11 @@ const GanttView: React.FC = () => {
                 </th>
                 {months.map((monthData, index) => (
                   <th key={index} style={getMonthCellStyle(monthData.month)}>
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
+                    <div className="gantt-flex gantt-flex-column gantt-flex-center" style={{ gap: '2px' }}>
                       <span>{monthData.label}</span>
                       {/* Mostrar año solo cuando cambie de año (mes 1) */}
                       {monthData.month === 1 && (
-                        <span style={{ 
-                          fontSize: '10px', 
-                          color: '#666', 
-                          fontWeight: 'normal',
-                          lineHeight: '1'
-                        }}>
+                        <span className="gantt-font-small gantt-text-small gantt-font-normal" style={{ lineHeight: '1' }}>
                           {monthData.year}
                         </span>
                       )}
@@ -562,20 +553,15 @@ const GanttView: React.FC = () => {
                 <React.Fragment key={deptIndex}>
                   <tr>
                     <td>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div className="gantt-flex gantt-flex-center" style={{ gap: '12px' }}>
                         <button 
                           onClick={() => toggleDepartment(deptIndex)}
+                          className="gantt-bg-secondary gantt-text-white gantt-cursor-pointer gantt-font-bold gantt-shadow-dark gantt-transition"
                           style={{
-                            background: 'linear-gradient(135deg, #6c757d 0%, #495057 100%)',
-                            color: 'white',
                             width: '26px',
                             height: '26px',
                             borderRadius: '50%',
-                            cursor: 'pointer',
                             fontSize: '14px',
-                            fontWeight: '600',
-                            boxShadow: '0 2px 8px rgba(108, 117, 125, 0.3)',
-                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                             border: '1px solid rgba(255,255,255,0.2)'
                           }}
                           onMouseEnter={(e) => {
@@ -600,8 +586,8 @@ const GanttView: React.FC = () => {
                   </tr>
                   {expandedDepartments.includes(deptIndex) && (
                     <>
-                      <tr style={{ background: '#f8f9fa' }}>
-                        <td style={{ paddingLeft: '48px', fontStyle: 'italic', borderRight: '1px solid #f0f0f0' }}>Proyecto A</td>
+                      <tr className="gantt-bg-light">
+                        <td className="gantt-pl-12 gantt-font-italic gantt-border-gray" style={{ borderRight: '1px solid #f0f0f0' }}>Proyecto A</td>
                         <td colSpan={12} style={{ position: 'relative', height: '40px', padding: '10px 0' }}>
                           {renderProjectBar(1, 6, 'Proyecto A')}
                           <div className="border-mar"></div>
@@ -615,8 +601,8 @@ const GanttView: React.FC = () => {
                           <div className="border-nov"></div>
                         </td>
                       </tr>
-                      <tr style={{ background: '#f8f9fa' }}>
-                        <td style={{ paddingLeft: '48px', fontStyle: 'italic', borderRight: '1px solid #f0f0f0' }}>Proyecto B</td>
+                      <tr className="gantt-bg-light">
+                        <td className="gantt-pl-12 gantt-font-italic gantt-border-gray" style={{ borderRight: '1px solid #f0f0f0' }}>Proyecto B</td>
                         <td colSpan={12} style={{ position: 'relative', height: '40px', padding: '10px 0' }}>
                           {renderProjectBar(3, 8, 'Proyecto B')}
                           <div className="border-mar"></div>
@@ -630,8 +616,8 @@ const GanttView: React.FC = () => {
                           <div className="border-nov"></div>
                         </td>
                       </tr>
-                      <tr style={{ background: '#f8f9fa' }}>
-                        <td style={{ paddingLeft: '48px', fontStyle: 'italic', borderRight: '1px solid #f0f0f0' }}>Proyecto C</td>
+                      <tr className="gantt-bg-light">
+                        <td className="gantt-pl-12 gantt-font-italic gantt-border-gray" style={{ borderRight: '1px solid #f0f0f0' }}>Proyecto C</td>
                         <td colSpan={12} style={{ position: 'relative', height: '40px', padding: '10px 0' }}>
                           {renderProjectBar(5, 10, 'Proyecto C')}
                           <div className="border-mar"></div>
