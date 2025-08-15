@@ -198,7 +198,7 @@ const GanttView: React.FC = () => {
           
           <div className="filter-group">
             <label htmlFor="department">Departamento:</label>
-            <div id="departmentFilterContainer" style={{ position: 'relative', width: '300px' }}>
+            <div id="departmentFilterContainer" style={{ position: 'relative', width: '250px' }}>
               <div 
                 style={{
                   border: '1px solid #ccc',
@@ -340,7 +340,7 @@ const GanttView: React.FC = () => {
           
           <div className="filter-group">
             <label htmlFor="startMonth">Mes desde:</label>
-            <div id="monthFilterContainer" style={{ position: 'relative', width: '300px' }}>
+            <div id="monthFilterContainer" style={{ position: 'relative', width: '200px' }}>
               <div 
                 style={{
                   border: '1px solid #ccc',
