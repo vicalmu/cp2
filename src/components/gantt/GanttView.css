@@ -202,3 +202,131 @@
 .gantt-container table thead th {
   border-top: 1px solid #f0f0f0 !important;
 }
+
+/* Bordes para celdas con colspan usando pseudo-elementos para alineación perfecta */
+.gantt-container table td[colspan] {
+  position: relative;
+}
+
+/* Borde 1: Enero */
+.gantt-container table td[colspan]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #f0f0f0;
+  left: calc(100% / 12);
+}
+
+/* Borde 2: Febrero */
+.gantt-container table td[colspan]::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #f0f0f0;
+  left: calc(200% / 12);
+}
+
+/* Borde 3: Marzo */
+.gantt-container table td[colspan] .border-mar {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #f0f0f0;
+  left: calc(300% / 12);
+}
+
+/* Borde 4: Abril */
+.gantt-container table td[colspan] .border-abr {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #f0f0f0;
+  left: calc(400% / 12);
+}
+
+/* Borde 5: Mayo */
+.gantt-container table td[colspan] .border-may {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #f0f0f0;
+  left: calc(500% / 12);
+}
+
+/* Borde 6: Junio */
+.gantt-container table td[colspan] .border-jun {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #f0f0f0;
+  left: calc(600% / 12);
+}
+
+/* Borde 7: Julio */
+.gantt-container table td[colspan] .border-jul {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #f0f0f0;
+  left: calc(700% / 12);
+}
+
+/* Borde 8: Agosto */
+.gantt-container table td[colspan] .border-ago {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #f0f0f0;
+  left: calc(800% / 12);
+}
+
+/* Borde 9: Septiembre */
+.gantt-container table td[colspan] .border-sep {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #f0f0f0;
+  left: calc(900% / 12);
+}
+
+/* Borde 10: Octubre */
+.gantt-container table td[colspan] .border-oct {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #f0f0f0;
+  left: calc(1000% / 12);
+}
+
+/* Borde 11: Noviembre */
+.gantt-container table td[colspan] .border-nov {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #f0f0f0;
+  left: calc(1100% / 12);
+}
+
+/* Borde 12: Diciembre (no se necesita, es el borde derecho natural) */

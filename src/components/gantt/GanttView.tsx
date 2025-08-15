@@ -598,21 +598,48 @@ const GanttView: React.FC = () => {
                   {expandedDepartments.includes(deptIndex) && (
                     <>
                       <tr style={{ background: '#f8f9fa' }}>
-                        <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Proyecto A</td>
+                        <td style={{ paddingLeft: '48px', fontStyle: 'italic', borderRight: '1px solid #f0f0f0' }}>Proyecto A</td>
                         <td colSpan={12} style={{ position: 'relative', height: '40px', padding: '10px 0' }}>
                           {renderProjectBar(1, 6, 'Proyecto A')}
+                          <div className="border-mar"></div>
+                          <div className="border-abr"></div>
+                          <div className="border-may"></div>
+                          <div className="border-jun"></div>
+                          <div className="border-jul"></div>
+                          <div className="border-ago"></div>
+                          <div className="border-sep"></div>
+                          <div className="border-oct"></div>
+                          <div className="border-nov"></div>
                         </td>
                       </tr>
                       <tr style={{ background: '#f8f9fa' }}>
-                        <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Proyecto B</td>
+                        <td style={{ paddingLeft: '48px', fontStyle: 'italic', borderRight: '1px solid #f0f0f0' }}>Proyecto B</td>
                         <td colSpan={12} style={{ position: 'relative', height: '40px', padding: '10px 0' }}>
                           {renderProjectBar(3, 8, 'Proyecto B')}
+                          <div className="border-mar"></div>
+                          <div className="border-abr"></div>
+                          <div className="border-may"></div>
+                          <div className="border-jun"></div>
+                          <div className="border-jul"></div>
+                          <div className="border-ago"></div>
+                          <div className="border-sep"></div>
+                          <div className="border-oct"></div>
+                          <div className="border-nov"></div>
                         </td>
                       </tr>
                       <tr style={{ background: '#f8f9fa' }}>
-                        <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Proyecto C</td>
+                        <td style={{ paddingLeft: '48px', fontStyle: 'italic', borderRight: '1px solid #f0f0f0' }}>Proyecto C</td>
                         <td colSpan={12} style={{ position: 'relative', height: '40px', padding: '10px 0' }}>
                           {renderProjectBar(5, 10, 'Proyecto C')}
+                          <div className="border-mar"></div>
+                          <div className="border-abr"></div>
+                          <div className="border-may"></div>
+                          <div className="border-jun"></div>
+                          <div className="border-jul"></div>
+                          <div className="border-nov"></div>
+                          <div className="border-sep"></div>
+                          <div className="border-oct"></div>
+                          <div className="border-nov"></div>
                         </td>
                       </tr>
                     </>
