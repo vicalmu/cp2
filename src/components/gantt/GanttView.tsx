@@ -1,7 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './GanttView.css';
 
 const GanttView: React.FC = () => {
+  // Estado para controlar expansión de departamentos
+  const [expandedDepartments, setExpandedDepartments] = useState<number[]>([]);
+
+  // Función para alternar expansión de departamento
+  const toggleDepartment = (deptId: number) => {
+    setExpandedDepartments(prev => 
+      prev.includes(deptId) 
+        ? prev.filter(id => id !== deptId)
+        : [...prev, deptId]
+    );
+  };
+
+  // Función para alternar expansión de todos los departamentos
+  const toggleAllDepartments = () => {
+    setExpandedDepartments(prev => 
+      prev.length === 25 ? [] : Array.from({length: 25}, (_, i) => i)
+    );
+  };
+
   return (
     <div className="gantt-container">
       {/* Header Principal */}
@@ -50,7 +69,27 @@ const GanttView: React.FC = () => {
           <table>
             <thead>
               <tr>
-                <th>Departamento</th>
+                <th>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <button 
+                      onClick={toggleAllDepartments}
+                      style={{
+                        background: '#2E5B9E',
+                        color: 'white',
+                        border: 'none',
+                        width: '30px',
+                        height: '30px',
+                        borderRadius: '50%',
+                        cursor: 'pointer',
+                        fontSize: '18px',
+                        fontWeight: 'bold'
+                      }}
+                    >
+                      {expandedDepartments.length === 25 ? '−' : '+'}
+                    </button>
+                    <span>Departamento</span>
+                  </div>
+                </th>
                 <th>Ene</th>
                 <th>Feb</th>
                 <th>Mar</th>
@@ -67,7 +106,27 @@ const GanttView: React.FC = () => {
             </thead>
             <tbody>
               <tr>
-                <td>PHP Development</td>
+                <td>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <button 
+                      onClick={() => toggleDepartment(0)}
+                      style={{
+                        background: '#6c757d',
+                        color: 'white',
+                        border: 'none',
+                        width: '24px',
+                        height: '24px',
+                        borderRadius: '50%',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        fontWeight: 'bold'
+                      }}
+                    >
+                      {expandedDepartments.includes(0) ? '−' : '+'}
+                    </button>
+                    <span>PHP Development</span>
+                  </div>
+                </td>
                 <td>75%</td>
                 <td>82%</td>
                 <td>68%</td>
@@ -81,8 +140,77 @@ const GanttView: React.FC = () => {
                 <td>84%</td>
                 <td>79%</td>
               </tr>
+              {expandedDepartments.includes(0) && (
+                <>
+                  <tr style={{ background: '#f8f9fa' }}>
+                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>E-commerce Renovación</td>
+                    <td>25%</td>
+                    <td>30%</td>
+                    <td>35%</td>
+                    <td>40%</td>
+                    <td>45%</td>
+                    <td>50%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                  </tr>
+                  <tr style={{ background: '#f8f9fa' }}>
+                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Portal Corporativo</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>20%</td>
+                    <td>25%</td>
+                    <td>30%</td>
+                    <td>35%</td>
+                    <td>40%</td>
+                    <td>45%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                  </tr>
+                  <tr style={{ background: '#f8f9fa' }}>
+                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>API REST v2</td>
+                    <td>15%</td>
+                    <td>18%</td>
+                    <td>22%</td>
+                    <td>25%</td>
+                    <td>28%</td>
+                    <td>30%</td>
+                    <td>32%</td>
+                    <td>35%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                  </tr>
+                </>
+              )}
               <tr>
-                <td>.NET Development</td>
+                <td>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <button 
+                      onClick={() => toggleDepartment(1)}
+                      style={{
+                        background: '#6c757d',
+                        color: 'white',
+                        border: 'none',
+                        width: '24px',
+                        height: '24px',
+                        borderRadius: '50%',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        fontWeight: 'bold'
+                      }}
+                    >
+                      {expandedDepartments.includes(1) ? '−' : '+'}
+                    </button>
+                    <span>.NET Development</span>
+                  </div>
+                </td>
                 <td>68%</td>
                 <td>75%</td>
                 <td>82%</td>
@@ -96,8 +224,77 @@ const GanttView: React.FC = () => {
                 <td>71%</td>
                 <td>83%</td>
               </tr>
+              {expandedDepartments.includes(1) && (
+                <>
+                  <tr style={{ background: '#f8f9fa' }}>
+                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>API Microservicios</td>
+                    <td>30%</td>
+                    <td>35%</td>
+                    <td>40%</td>
+                    <td>45%</td>
+                    <td>50%</td>
+                    <td>55%</td>
+                    <td>60%</td>
+                    <td>65%</td>
+                    <td>70%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                  </tr>
+                  <tr style={{ background: '#f8f9fa' }}>
+                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Sistema Facturación</td>
+                    <td>0%</td>
+                    <td>25%</td>
+                    <td>30%</td>
+                    <td>35%</td>
+                    <td>40%</td>
+                    <td>45%</td>
+                    <td>50%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                  </tr>
+                  <tr style={{ background: '#f8f9fa' }}>
+                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Cloud Migration</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>20%</td>
+                    <td>25%</td>
+                    <td>30%</td>
+                    <td>35%</td>
+                    <td>40%</td>
+                    <td>45%</td>
+                    <td>50%</td>
+                    <td>55%</td>
+                    <td>60%</td>
+                  </tr>
+                </>
+              )}
               <tr>
-                <td>Frontend Development</td>
+                <td>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <button 
+                      onClick={() => toggleDepartment(2)}
+                      style={{
+                        background: '#6c757d',
+                        color: 'white',
+                        border: 'none',
+                        width: '24px',
+                        height: '24px',
+                        borderRadius: '50%',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        fontWeight: 'bold'
+                      }}
+                    >
+                      {expandedDepartments.includes(2) ? '−' : '+'}
+                    </button>
+                    <span>Frontend Development</span>
+                  </div>
+                </td>
                 <td>81%</td>
                 <td>76%</td>
                 <td>89%</td>
@@ -111,8 +308,77 @@ const GanttView: React.FC = () => {
                 <td>80%</td>
                 <td>86%</td>
               </tr>
+              {expandedDepartments.includes(2) && (
+                <>
+                  <tr style={{ background: '#f8f9fa' }}>
+                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Dashboard Principal</td>
+                    <td>40%</td>
+                    <td>45%</td>
+                    <td>50%</td>
+                    <td>55%</td>
+                    <td>60%</td>
+                    <td>65%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                  </tr>
+                  <tr style={{ background: '#f8f9fa' }}>
+                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Sistema de Usuarios</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>30%</td>
+                    <td>35%</td>
+                    <td>40%</td>
+                    <td>45%</td>
+                    <td>50%</td>
+                    <td>55%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                  </tr>
+                  <tr style={{ background: '#f8f9fa' }}>
+                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Módulo de Reportes</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>25%</td>
+                    <td>30%</td>
+                    <td>35%</td>
+                    <td>40%</td>
+                    <td>45%</td>
+                    <td>50%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                  </tr>
+                </>
+              )}
               <tr>
-                <td>QA Testing</td>
+                <td>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <button 
+                      onClick={() => toggleDepartment(3)}
+                      style={{
+                        background: '#6c757d',
+                        color: 'white',
+                        border: 'none',
+                        width: '24px',
+                        height: '24px',
+                        borderRadius: '50%',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        fontWeight: 'bold'
+                      }}
+                    >
+                      {expandedDepartments.includes(3) ? '−' : '+'}
+                    </button>
+                    <span>QA Testing</span>
+                  </div>
+                </td>
                 <td>72%</td>
                 <td>88%</td>
                 <td>75%</td>
@@ -126,8 +392,77 @@ const GanttView: React.FC = () => {
                 <td>85%</td>
                 <td>78%</td>
               </tr>
+              {expandedDepartments.includes(3) && (
+                <>
+                  <tr style={{ background: '#f8f9fa' }}>
+                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Testing Automatizado</td>
+                    <td>20%</td>
+                    <td>22%</td>
+                    <td>25%</td>
+                    <td>28%</td>
+                    <td>30%</td>
+                    <td>32%</td>
+                    <td>35%</td>
+                    <td>38%</td>
+                    <td>40%</td>
+                    <td>42%</td>
+                    <td>45%</td>
+                    <td>48%</td>
+                  </tr>
+                  <tr style={{ background: '#f8f9fa' }}>
+                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Testing Manual</td>
+                    <td>0%</td>
+                    <td>15%</td>
+                    <td>18%</td>
+                    <td>20%</td>
+                    <td>22%</td>
+                    <td>25%</td>
+                    <td>28%</td>
+                    <td>30%</td>
+                    <td>32%</td>
+                    <td>35%</td>
+                    <td>38%</td>
+                    <td>0%</td>
+                  </tr>
+                  <tr style={{ background: '#f8f9fa' }}>
+                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Performance Testing</td>
+                    <td>25%</td>
+                    <td>28%</td>
+                    <td>30%</td>
+                    <td>32%</td>
+                    <td>35%</td>
+                    <td>38%</td>
+                    <td>40%</td>
+                    <td>42%</td>
+                    <td>45%</td>
+                    <td>48%</td>
+                    <td>50%</td>
+                    <td>52%</td>
+                  </tr>
+                </>
+              )}
               <tr>
-                <td>DevOps</td>
+                <td>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <button 
+                      onClick={() => toggleDepartment(4)}
+                      style={{
+                        background: '#6c757d',
+                        color: 'white',
+                        border: 'none',
+                        width: '24px',
+                        height: '24px',
+                        borderRadius: '50%',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        fontWeight: 'bold'
+                      }}
+                    >
+                      {expandedDepartments.includes(4) ? '−' : '+'}
+                    </button>
+                    <span>DevOps</span>
+                  </div>
+                </td>
                 <td>85%</td>
                 <td>71%</td>
                 <td>88%</td>
@@ -141,6 +476,55 @@ const GanttView: React.FC = () => {
                 <td>89%</td>
                 <td>75%</td>
               </tr>
+              {expandedDepartments.includes(4) && (
+                <>
+                  <tr style={{ background: '#f8f9fa' }}>
+                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Pipeline CI/CD</td>
+                    <td>35%</td>
+                    <td>38%</td>
+                    <td>40%</td>
+                    <td>42%</td>
+                    <td>45%</td>
+                    <td>48%</td>
+                    <td>50%</td>
+                    <td>52%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                  </tr>
+                  <tr style={{ background: '#f8f9fa' }}>
+                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Monitoreo y Alertas</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                    <td>25%</td>
+                    <td>28%</td>
+                    <td>30%</td>
+                    <td>32%</td>
+                    <td>35%</td>
+                    <td>38%</td>
+                    <td>40%</td>
+                    <td>42%</td>
+                    <td>0%</td>
+                    <td>0%</td>
+                  </tr>
+                  <tr style={{ background: '#f8f9fa' }}>
+                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Infraestructura como Código</td>
+                    <td>30%</td>
+                    <td>32%</td>
+                    <td>35%</td>
+                    <td>38%</td>
+                    <td>40%</td>
+                    <td>42%</td>
+                    <td>45%</td>
+                    <td>48%</td>
+                    <td>50%</td>
+                    <td>52%</td>
+                    <td>55%</td>
+                    <td>58%</td>
+                  </tr>
+                </>
+              )}
               <tr>
                 <td>Data Science</td>
                 <td>79%</td>
