@@ -50,159 +50,381 @@ const GanttView: React.FC = () => {
           <table>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Email</th>
                 <th>Departamento</th>
-                <th>Estado</th>
-                <th>Fecha Ingreso</th>
-                <th>Acciones</th>
+                <th>Ene</th>
+                <th>Feb</th>
+                <th>Mar</th>
+                <th>Abr</th>
+                <th>May</th>
+                <th>Jun</th>
+                <th>Jul</th>
+                <th>Ago</th>
+                <th>Sep</th>
+                <th>Oct</th>
+                <th>Nov</th>
+                <th>Dic</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>001</td>
-                <td>Ana García</td>
-                <td>ana.garcia@empresa.com</td>
-                <td>Ventas</td>
-                <td>Activo</td>
-                <td>15/01/2024</td>
-                <td><button className="filter-button">Ver</button></td>
+                <td>PHP Development</td>
+                <td>75%</td>
+                <td>82%</td>
+                <td>68%</td>
+                <td>91%</td>
+                <td>77%</td>
+                <td>85%</td>
+                <td>73%</td>
+                <td>89%</td>
+                <td>81%</td>
+                <td>76%</td>
+                <td>84%</td>
+                <td>79%</td>
               </tr>
               <tr>
-                <td>002</td>
-                <td>Carlos López</td>
-                <td>carlos.lopez@empresa.com</td>
-                <td>Desarrollo</td>
-                <td>Activo</td>
-                <td>10/02/2024</td>
-                <td><button className="filter-button">Ver</button></td>
+                <td>.NET Development</td>
+                <td>68%</td>
+                <td>75%</td>
+                <td>82%</td>
+                <td>79%</td>
+                <td>86%</td>
+                <td>73%</td>
+                <td>91%</td>
+                <td>77%</td>
+                <td>84%</td>
+                <td>89%</td>
+                <td>71%</td>
+                <td>83%</td>
               </tr>
               <tr>
-                <td>003</td>
-                <td>María Rodríguez</td>
-                <td>maria.rodriguez@empresa.com</td>
-                <td>Marketing</td>
-                <td>Pendiente</td>
-                <td>22/02/2024</td>
-                <td><button className="filter-button">Ver</button></td>
+                <td>Frontend Development</td>
+                <td>81%</td>
+                <td>76%</td>
+                <td>89%</td>
+                <td>73%</td>
+                <td>85%</td>
+                <td>78%</td>
+                <td>82%</td>
+                <td>91%</td>
+                <td>75%</td>
+                <td>87%</td>
+                <td>80%</td>
+                <td>86%</td>
               </tr>
               <tr>
-                <td>004</td>
-                <td>Juan Martínez</td>
-                <td>juan.martinez@empresa.com</td>
-                <td>Soporte</td>
-                <td>Activo</td>
-                <td>05/03/2024</td>
-                <td><button className="filter-button">Ver</button></td>
+                <td>QA Testing</td>
+                <td>72%</td>
+                <td>88%</td>
+                <td>75%</td>
+                <td>83%</td>
+                <td>79%</td>
+                <td>86%</td>
+                <td>74%</td>
+                <td>81%</td>
+                <td>90%</td>
+                <td>76%</td>
+                <td>85%</td>
+                <td>78%</td>
               </tr>
               <tr>
-                <td>005</td>
-                <td>Laura Sánchez</td>
-                <td>laura.sanchez@empresa.com</td>
-                <td>Ventas</td>
-                <td>Inactivo</td>
-                <td>12/03/2024</td>
-                <td><button className="filter-button">Ver</button></td>
+                <td>DevOps</td>
+                <td>85%</td>
+                <td>71%</td>
+                <td>88%</td>
+                <td>76%</td>
+                <td>82%</td>
+                <td>79%</td>
+                <td>87%</td>
+                <td>74%</td>
+                <td>83%</td>
+                <td>80%</td>
+                <td>89%</td>
+                <td>75%</td>
               </tr>
               <tr>
-                <td>006</td>
-                <td>Pedro Gómez</td>
-                <td>pedro.gomez@empresa.com</td>
-                <td>Desarrollo</td>
-                <td>Activo</td>
-                <td>18/03/2024</td>
-                <td><button className="filter-button">Ver</button></td>
+                <td>Data Science</td>
+                <td>79%</td>
+                <td>84%</td>
+                <td>77%</td>
+                <td>90%</td>
+                <td>73%</td>
+                <td>86%</td>
+                <td>81%</td>
+                <td>78%</td>
+                <td>85%</td>
+                <td>72%</td>
+                <td>88%</td>
+                <td>83%</td>
               </tr>
               <tr>
-                <td>011</td>
-                <td>Isabel Moreno</td>
-                <td>isabel.moreno@empresa.com</td>
-                <td>Marketing</td>
-                <td>Activo</td>
-                <td>22/04/2024</td>
-                <td><button className="filter-button">Ver</button></td>
+                <td>Mobile Development</td>
+                <td>86%</td>
+                <td>78%</td>
+                <td>83%</td>
+                <td>75%</td>
+                <td>89%</td>
+                <td>81%</td>
+                <td>76%</td>
+                <td>84%</td>
+                <td>77%</td>
+                <td>90%</td>
+                <td>82%</td>
+                <td>79%</td>
               </tr>
               <tr>
-                <td>012</td>
-                <td>Francisco Jiménez</td>
-                <td>francisco.jimenez@empresa.com</td>
-                <td>Soporte</td>
-                <td>Inactivo</td>
-                <td>29/04/2024</td>
-                <td><button className="filter-button">Ver</button></td>
+                <td>UI/UX Design</td>
+                <td>73%</td>
+                <td>87%</td>
+                <td>80%</td>
+                <td>85%</td>
+                <td>78%</td>
+                <td>82%</td>
+                <td>89%</td>
+                <td>76%</td>
+                <td>81%</td>
+                <td>84%</td>
+                <td>77%</td>
+                <td>86%</td>
               </tr>
               <tr>
-                <td>013</td>
-                <td>Lucía Herrera</td>
-                <td>lucia.herrera@empresa.com</td>
-                <td>Ventas</td>
-                <td>Pendiente</td>
-                <td>06/05/2024</td>
-                <td><button className="filter-button">Ver</button></td>
+                <td>Product Management</td>
+                <td>88%</td>
+                <td>82%</td>
+                <td>75%</td>
+                <td>79%</td>
+                <td>86%</td>
+                <td>73%</td>
+                <td>84%</td>
+                <td>90%</td>
+                <td>77%</td>
+                <td>81%</td>
+                <td>85%</td>
+                <td>78%</td>
               </tr>
               <tr>
-                <td>014</td>
-                <td>Andrés Vega</td>
-                <td>andres.vega@empresa.com</td>
-                <td>Desarrollo</td>
-                <td>Activo</td>
-                <td>13/05/2024</td>
-                <td><button className="filter-button">Ver</button></td>
+                <td>Security Team</td>
+                <td>81%</td>
+                <td>76%</td>
+                <td>89%</td>
+                <td>83%</td>
+                <td>78%</td>
+                <td>85%</td>
+                <td>72%</td>
+                <td>87%</td>
+                <td>80%</td>
+                <td>86%</td>
+                <td>74%</td>
+                <td>91%</td>
               </tr>
               <tr>
-                <td>015</td>
-                <td>Patricia Castro</td>
-                <td>patricia.castro@empresa.com</td>
-                <td>Marketing</td>
-                <td>Activo</td>
-                <td>20/05/2024</td>
-                <td><button className="filter-button">Ver</button></td>
+                <td>Cloud Infrastructure</td>
+                <td>77%</td>
+                <td>85%</td>
+                <td>72%</td>
+                <td>88%</td>
+                <td>81%</td>
+                <td>79%</td>
+                <td>86%</td>
+                <td>73%</td>
+                <td>84%</td>
+                <td>78%</td>
+                <td>90%</td>
+                <td>82%</td>
               </tr>
               <tr>
-                <td>016</td>
-                <td>Javier Ramos</td>
-                <td>javier.ramos@empresa.com</td>
-                <td>Soporte</td>
-                <td>Activo</td>
-                <td>27/05/2024</td>
-                <td><button className="filter-button">Ver</button></td>
+                <td>Business Analysis</td>
+                <td>84%</td>
+                <td>79%</td>
+                <td>86%</td>
+                <td>77%</td>
+                <td>83%</td>
+                <td>90%</td>
+                <td>75%</td>
+                <td>81%</td>
+                <td>78%</td>
+                <td>85%</td>
+                <td>72%</td>
+                <td>87%</td>
               </tr>
               <tr>
-                <td>017</td>
-                <td>Beatriz Ortega</td>
-                <td>beatriz.ortega@empresa.com</td>
-                <td>Ventas</td>
-                <td>Inactivo</td>
-                <td>03/06/2024</td>
-                <td><button className="filter-button">Ver</button></td>
+                <td>Technical Writing</td>
+                <td>79%</td>
+                <td>83%</td>
+                <td>77%</td>
+                <td>86%</td>
+                <td>80%</td>
+                <td>74%</td>
+                <td>89%</td>
+                <td>82%</td>
+                <td>76%</td>
+                <td>88%</td>
+                <td>81%</td>
+                <td>75%</td>
               </tr>
               <tr>
-                <td>018</td>
-                <td>Raúl Mendoza</td>
-                <td>raul.mendoza@empresa.com</td>
-                <td>Desarrollo</td>
-                <td>Activo</td>
-                <td>10/06/2024</td>
-                <td><button className="filter-button">Ver</button></td>
+                <td>Support Team</td>
+                <td>82%</td>
+                <td>88%</td>
+                <td>74%</td>
+                <td>80%</td>
+                <td>85%</td>
+                <td>77%</td>
+                <td>83%</td>
+                <td>89%</td>
+                <td>72%</td>
+                <td>86%</td>
+                <td>79%</td>
+                <td>84%</td>
               </tr>
               <tr>
-                <td>019</td>
-                <td>Cristina Vargas</td>
-                <td>cristina.vargas@empresa.com</td>
-                <td>Marketing</td>
-                <td>Pendiente</td>
-                <td>17/06/2024</td>
-                <td><button className="filter-button">Ver</button></td>
+                <td>Research & Development</td>
+                <td>75%</td>
+                <td>81%</td>
+                <td>87%</td>
+                <td>73%</td>
+                <td>88%</td>
+                <td>82%</td>
+                <td>76%</td>
+                <td>85%</td>
+                <td>90%</td>
+                <td>77%</td>
+                <td>83%</td>
+                <td>79%</td>
               </tr>
               <tr>
-                <td>020</td>
-                <td>Sergio Peña</td>
-                <td>sergio.pena@empresa.com</td>
-                <td>Soporte</td>
-                <td>Activo</td>
-                <td>24/06/2024</td>
-                <td><button className="filter-button">Ver</button></td>
+                <td>Machine Learning</td>
+                <td>83%</td>
+                <td>77%</td>
+                <td>91%</td>
+                <td>85%</td>
+                <td>79%</td>
+                <td>86%</td>
+                <td>82%</td>
+                <td>88%</td>
+                <td>74%</td>
+                <td>81%</td>
+                <td>87%</td>
+                <td>80%</td>
+              </tr>
+              <tr>
+                <td>Blockchain Development</td>
+                <td>76%</td>
+                <td>89%</td>
+                <td>73%</td>
+                <td>87%</td>
+                <td>84%</td>
+                <td>78%</td>
+                <td>90%</td>
+                <td>75%</td>
+                <td>82%</td>
+                <td>86%</td>
+                <td>79%</td>
+                <td>83%</td>
+              </tr>
+              <tr>
+                <td>Game Development</td>
+                <td>88%</td>
+                <td>74%</td>
+                <td>85%</td>
+                <td>79%</td>
+                <td>91%</td>
+                <td>76%</td>
+                <td>83%</td>
+                <td>87%</td>
+                <td>80%</td>
+                <td>84%</td>
+                <td>78%</td>
+                <td>86%</td>
+              </tr>
+              <tr>
+                <td>Network Engineering</td>
+                <td>81%</td>
+                <td>86%</td>
+                <td>72%</td>
+                <td>89%</td>
+                <td>77%</td>
+                <td>84%</td>
+                <td>90%</td>
+                <td>73%</td>
+                <td>85%</td>
+                <td>78%</td>
+                <td>82%</td>
+                <td>87%</td>
+              </tr>
+              <tr>
+                <td>Database Administration</td>
+                <td>85%</td>
+                <td>78%</td>
+                <td>83%</td>
+                <td>76%</td>
+                <td>88%</td>
+                <td>81%</td>
+                <td>74%</td>
+                <td>86%</td>
+                <td>89%</td>
+                <td>82%</td>
+                <td>77%</td>
+                <td>84%</td>
+              </tr>
+              <tr>
+                <td>System Administration</td>
+                <td>79%</td>
+                <td>84%</td>
+                <td>87%</td>
+                <td>81%</td>
+                <td>75%</td>
+                <td>90%</td>
+                <td>83%</td>
+                <td>78%</td>
+                <td>86%</td>
+                <td>73%</td>
+                <td>89%</td>
+                <td>82%</td>
+              </tr>
+              <tr>
+                <td>API Development</td>
+                <td>82%</td>
+                <td>77%</td>
+                <td>89%</td>
+                <td>85%</td>
+                <td>80%</td>
+                <td>74%</td>
+                <td>87%</td>
+                <td>91%</td>
+                <td>76%</td>
+                <td>83%</td>
+                <td>88%</td>
+                <td>79%</td>
+              </tr>
+              <tr>
+                <td>Microservices Team</td>
+                <td>87%</td>
+                <td>81%</td>
+                <td>74%</td>
+                <td>88%</td>
+                <td>82%</td>
+                <td>89%</td>
+                <td>75%</td>
+                <td>84%</td>
+                <td>90%</td>
+                <td>77%</td>
+                <td>83%</td>
+                <td>86%</td>
+              </tr>
+              <tr>
+                <td>Performance Testing</td>
+                <td>73%</td>
+                <td>88%</td>
+                <td>82%</td>
+                <td>79%</td>
+                <td>85%</td>
+                <td>76%</td>
+                <td>91%</td>
+                <td>83%</td>
+                <td>78%</td>
+                <td>86%</td>
+                <td>80%</td>
+                <td>87%</td>
               </tr>
             </tbody>
           </table>
