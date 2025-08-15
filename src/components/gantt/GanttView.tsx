@@ -508,10 +508,10 @@ const GanttView: React.FC = () => {
             <thead>
               <tr>
                 <th>
-                  <div className="gantt-flex gantt-flex-center" style={{ gap: '10px' }}>
+                  <div className="gantt-button-container-small">
                     <button 
                       onClick={toggleAllDepartments}
-                      className="gantt-bg-primary gantt-text-white gantt-cursor-pointer gantt-font-bold gantt-shadow-medium gantt-transition"
+                      className="gantt-bg-primary gantt-text-white gantt-cursor-pointer gantt-font-bold gantt-shadow-medium gantt-transition gantt-button"
                       style={{
                         width: '32px',
                         height: '32px',
@@ -553,10 +553,10 @@ const GanttView: React.FC = () => {
                 <React.Fragment key={deptIndex}>
                   <tr>
                     <td>
-                      <div className="gantt-flex gantt-flex-center" style={{ gap: '12px' }}>
+                      <div className="gantt-button-container">
                         <button 
                           onClick={() => toggleDepartment(deptIndex)}
-                          className="gantt-bg-secondary gantt-text-white gantt-cursor-pointer gantt-font-bold gantt-shadow-dark gantt-transition"
+                          className="gantt-bg-secondary gantt-text-white gantt-cursor-pointer gantt-font-bold gantt-shadow-dark gantt-transition gantt-button"
                           style={{
                             width: '26px',
                             height: '26px',

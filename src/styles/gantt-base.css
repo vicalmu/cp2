@@ -138,6 +138,25 @@
   flex-direction: column;
 }
 
+/* ===== ALINEACIÓN ESPECÍFICA PARA BOTONES ===== */
+.gantt-button-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gantt-button-container-small {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gantt-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* ===== PADDING Y MARGIN ===== */
 .gantt-p-2 {
   padding: 8px;
