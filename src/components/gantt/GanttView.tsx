@@ -186,15 +186,7 @@ const GanttView: React.FC = () => {
             <input type="text" id="search" placeholder="Nombre, email..." />
           </div>
           
-          <div className="filter-group">
-            <label htmlFor="status">Estado:</label>
-            <select id="status">
-              <option value="">Todos</option>
-              <option value="activo">Activo</option>
-              <option value="inactivo">Inactivo</option>
-              <option value="pendiente">Pendiente</option>
-            </select>
-          </div>
+
           
           <div className="filter-group">
             <label htmlFor="department">Departamento:</label>
