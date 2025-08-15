@@ -214,7 +214,7 @@ const GanttView: React.FC = () => {
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   {selectedDepartments.length === 0 ? (
-                    <span style={{ color: '#999' }}>Seleccionar departamentos...</span>
+                    <span style={{ color: '#999' }}>Seleccionar</span>
                   ) : (
                     <>
                       <span style={{ color: '#1976d2', fontWeight: '500' }}>
