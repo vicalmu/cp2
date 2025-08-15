@@ -1,9 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './GanttView.css';
 
 const GanttView: React.FC = () => {
   // Estado para controlar expansión de departamentos
   const [expandedDepartments, setExpandedDepartments] = useState<number[]>([]);
+  
+  // Estado para el mes de inicio seleccionado
+  const [startMonth, setStartMonth] = useState<{ month: number; year: number }>({ month: 1, year: 2025 });
+
+  // Estado para filtros
+  const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
+
+  // Mes actual (agosto = 8)
+  const currentMonth = 8;
+
+  // Lista de departamentos disponibles
+  const availableDepartments = [
+    'PHP Development', '.NET Development', 'Frontend Development', 'QA Testing', 'DevOps',
+    'Data Science', 'Mobile Development', 'UI/UX Design', 'Product Management', 'Security Team',
+    'Cloud Infrastructure', 'Business Analysis', 'Technical Writing', 'Support Team', 'Research & Development',
+    'Machine Learning', 'Blockchain Development', 'Game Development', 'Network Engineering', 'Database Administration',
+    'System Administration', 'API Development', 'Microservices Team', 'Performance Testing'
+  ];
+
+  // Obtener año actual y establecer mes de inicio por defecto
+  useEffect(() => {
+    const currentYear = new Date().getFullYear();
+    setStartMonth({ month: 1, year: currentYear });
+  }, []);
+
+  // Cerrar dropdown al hacer click fuera
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const dropdown = document.getElementById('departmentDropdown');
+      const filterContainer = document.getElementById('departmentFilterContainer');
+      
+      if (dropdown && filterContainer && !filterContainer.contains(event.target as Node)) {
+        dropdown.style.display = 'none';
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // Función para alternar expansión de departamento
   const toggleDepartment = (deptId: number) => {
@@ -20,6 +61,105 @@ const GanttView: React.FC = () => {
       prev.length === 25 ? [] : Array.from({length: 25}, (_, i) => i)
     );
   };
+
+  // Función para obtener estilos de celda según si es el mes actual
+  const getMonthCellStyle = (month: number) => {
+    if (month === currentMonth) {
+      return {
+        borderLeft: '2px solid #dee2e6',
+        borderRight: '2px solid #dee2e6',
+        fontWeight: '500',
+        color: '#495057'
+      };
+    }
+    return {};
+  };
+
+  // Función para generar los 12 meses desde el mes de inicio
+  const generateMonths = () => {
+    const months = [];
+    let currentMonth = startMonth.month;
+    let currentYear = startMonth.year;
+    
+    for (let i = 0; i < 12; i++) {
+      months.push({
+        month: currentMonth,
+        year: currentYear,
+        label: getMonthLabel(currentMonth)
+      });
+      
+      currentMonth++;
+      if (currentMonth > 12) {
+        currentMonth = 1;
+        currentYear++;
+      }
+    }
+    
+    return months;
+  };
+
+  // Función para obtener etiqueta del mes
+  const getMonthLabel = (month: number) => {
+    const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+    return monthNames[month - 1];
+  };
+
+  // Función para renderizar barra de proyecto
+  const renderProjectBar = (startMonth: number, endMonth: number, projectName: string) => {
+    const totalMonths = 12;
+    const startPosition = (startMonth - 1) / totalMonths * 100;
+    const width = (endMonth - startMonth + 1) / totalMonths * 100;
+    
+    return (
+      <div 
+        style={{
+          position: 'absolute',
+          left: `${startPosition}%`,
+          width: `${width}%`,
+          height: '20px',
+          background: 'linear-gradient(90deg, #4CAF50, #45a049)',
+          borderRadius: '10px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+          fontSize: '11px',
+          fontWeight: 'bold',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+          cursor: 'pointer',
+          transition: 'all 0.3s ease'
+        }}
+        title={`${projectName}: ${startMonth}/${2025} - ${endMonth}/${2025}`}
+      >
+        {projectName}
+      </div>
+    );
+  };
+
+  // Función para alternar selección de departamento
+  const toggleDepartmentSelection = (deptName: string) => {
+    setSelectedDepartments(prev => 
+      prev.includes(deptName)
+        ? prev.filter(name => name !== deptName)
+        : [...prev, deptName]
+    );
+  };
+
+  // Función para limpiar todos los filtros de departamento
+  const clearDepartmentFilters = () => {
+    setSelectedDepartments([]);
+  };
+
+  // Función para obtener departamentos filtrados
+  const getFilteredDepartments = () => {
+    if (selectedDepartments.length === 0) {
+      return availableDepartments;
+    }
+    return availableDepartments.filter(dept => selectedDepartments.includes(dept));
+  };
+
+  const months = generateMonths();
+  const filteredDepartments = getFilteredDepartments();
 
   return (
     <div className="gantt-container">
@@ -49,12 +189,180 @@ const GanttView: React.FC = () => {
           
           <div className="filter-group">
             <label htmlFor="department">Departamento:</label>
-            <select id="department">
-              <option value="">Todos</option>
-              <option value="ventas">Ventas</option>
-              <option value="marketing">Marketing</option>
-              <option value="desarrollo">Desarrollo</option>
-              <option value="soporte">Soporte</option>
+            <div id="departmentFilterContainer" style={{ position: 'relative', width: '300px' }}>
+              <div 
+                style={{
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  padding: '8px 12px',
+                  minHeight: '38px',
+                  background: 'white',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between'
+                }}
+                onClick={() => {
+                  const dropdown = document.getElementById('departmentDropdown');
+                  if (dropdown) {
+                    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+                  }
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  {selectedDepartments.length === 0 ? (
+                    <span style={{ color: '#999' }}>Seleccionar departamentos...</span>
+                  ) : (
+                    <>
+                      <span style={{ color: '#1976d2', fontWeight: '500' }}>
+                        {selectedDepartments.length} departamento{selectedDepartments.length !== 1 ? 's' : ''} seleccionado{selectedDepartments.length !== 1 ? 's' : ''}
+                      </span>
+                    </>
+                  )}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  {selectedDepartments.length > 0 && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        clearDepartmentFilters();
+                      }}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        color: '#dc3545',
+                        cursor: 'pointer',
+                        fontSize: '12px',
+                        padding: '2px 6px',
+                        borderRadius: '4px'
+                      }}
+                      title="Limpiar filtros"
+                    >
+                      Limpiar
+                    </button>
+                  )}
+                  <span style={{ color: '#666', fontSize: '14px' }}>
+                    {selectedDepartments.length === 0 ? '▼' : '▼'}
+                  </span>
+                </div>
+              </div>
+              
+              <div 
+                id="departmentDropdown"
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  right: 0,
+                  background: 'white',
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  maxHeight: '300px',
+                  overflowY: 'auto',
+                  zIndex: 1000,
+                  display: 'none',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                  marginTop: '4px'
+                }}
+              >
+                <div style={{ padding: '8px 12px', borderBottom: '1px solid #f0f0f0', background: '#f8f9fa' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontWeight: '500', color: '#333' }}>Departamentos</span>
+                    {selectedDepartments.length > 0 && (
+                      <button
+                        onClick={clearDepartmentFilters}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          color: '#dc3545',
+                          cursor: 'pointer',
+                          fontSize: '12px',
+                          textDecoration: 'underline'
+                        }}
+                      >
+                        Limpiar todo
+                      </button>
+                    )}
+                  </div>
+                </div>
+                {availableDepartments.map(dept => (
+                  <div
+                    key={dept}
+                    onClick={() => toggleDepartmentSelection(dept)}
+                    style={{
+                      padding: '10px 12px',
+                      cursor: 'pointer',
+                      background: selectedDepartments.includes(dept) ? '#e3f2fd' : 'white',
+                      color: selectedDepartments.includes(dept) ? '#1976d2' : '#333',
+                      borderBottom: '1px solid #f0f0f0',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      transition: 'background-color 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!selectedDepartments.includes(dept)) {
+                        e.currentTarget.style.background = '#f8f9fa';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!selectedDepartments.includes(dept)) {
+                        e.currentTarget.style.background = 'white';
+                      }
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedDepartments.includes(dept)}
+                      readOnly
+                      style={{ 
+                        margin: 0,
+                        width: '16px',
+                        height: '16px',
+                        accentColor: '#1976d2'
+                      }}
+                    />
+                    <span style={{ fontSize: '14px' }}>{dept}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          <div className="filter-group">
+            <label htmlFor="startMonth">Mes desde:</label>
+            <select 
+              id="startMonth" 
+              value={`${startMonth.month}-${startMonth.year}`}
+              onChange={(e) => {
+                const [month, year] = e.target.value.split('-').map(Number);
+                setStartMonth({ month, year });
+              }}
+            >
+              <option value="1-2025">Enero 2025</option>
+              <option value="2-2025">Febrero 2025</option>
+              <option value="3-2025">Marzo 2025</option>
+              <option value="4-2025">Abril 2025</option>
+              <option value="5-2025">Mayo 2025</option>
+              <option value="6-2025">Junio 2025</option>
+              <option value="7-2025">Julio 2025</option>
+              <option value="8-2025">Agosto 2025</option>
+              <option value="9-2025">Septiembre 2025</option>
+              <option value="10-2025">Octubre 2025</option>
+              <option value="11-2025">Noviembre 2025</option>
+              <option value="12-2025">Diciembre 2025</option>
+              <option value="1-2026">Enero 2026</option>
+              <option value="2-2026">Febrero 2026</option>
+              <option value="3-2026">Marzo 2026</option>
+              <option value="4-2026">Abril 2026</option>
+              <option value="5-2026">Mayo 2026</option>
+              <option value="6-2026">Junio 2026</option>
+              <option value="7-2026">Julio 2026</option>
+              <option value="8-2026">Agosto 2026</option>
+              <option value="9-2026">Septiembre 2026</option>
+              <option value="10-2026">Octubre 2026</option>
+              <option value="11-2026">Noviembre 2026</option>
+              <option value="12-2026">Diciembre 2026</option>
             </select>
           </div>
           
@@ -90,726 +398,79 @@ const GanttView: React.FC = () => {
                     <span>Departamento</span>
                   </div>
                 </th>
-                <th>Ene</th>
-                <th>Feb</th>
-                <th>Mar</th>
-                <th>Abr</th>
-                <th>May</th>
-                <th>Jun</th>
-                <th>Jul</th>
-                <th>Ago</th>
-                <th>Sep</th>
-                <th>Oct</th>
-                <th>Nov</th>
-                <th>Dic</th>
+                {months.map((monthData, index) => (
+                  <th key={index} style={getMonthCellStyle(monthData.month)}>
+                    {monthData.label}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <button 
-                      onClick={() => toggleDepartment(0)}
-                      style={{
-                        background: '#6c757d',
-                        color: 'white',
-                        border: 'none',
-                        width: '24px',
-                        height: '24px',
-                        borderRadius: '50%',
-                        cursor: 'pointer',
-                        fontSize: '14px',
-                        fontWeight: 'bold'
-                      }}
-                    >
-                      {expandedDepartments.includes(0) ? '−' : '+'}
-                    </button>
-                    <span>PHP Development</span>
-                  </div>
-                </td>
-                <td>75%</td>
-                <td>82%</td>
-                <td>68%</td>
-                <td>91%</td>
-                <td>77%</td>
-                <td>85%</td>
-                <td>73%</td>
-                <td>89%</td>
-                <td>81%</td>
-                <td>76%</td>
-                <td>84%</td>
-                <td>79%</td>
-              </tr>
-              {expandedDepartments.includes(0) && (
-                <>
-                  <tr style={{ background: '#f8f9fa' }}>
-                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>E-commerce Renovación</td>
-                    <td>25%</td>
-                    <td>30%</td>
-                    <td>35%</td>
-                    <td>40%</td>
-                    <td>45%</td>
-                    <td>50%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
+              {filteredDepartments.slice(0, 5).map((deptName, deptIndex) => (
+                <React.Fragment key={deptIndex}>
+                  <tr>
+                    <td>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <button 
+                          onClick={() => toggleDepartment(deptIndex)}
+                          style={{
+                            background: '#6c757d',
+                            color: 'white',
+                            border: 'none',
+                            width: '24px',
+                            height: '24px',
+                            borderRadius: '50%',
+                            cursor: 'pointer',
+                            fontSize: '14px',
+                            fontWeight: 'bold'
+                          }}
+                        >
+                          {expandedDepartments.includes(deptIndex) ? '−' : '+'}
+                        </button>
+                        <span>{deptName}</span>
+                      </div>
+                    </td>
+                    {months.map((monthData, index) => (
+                      <td key={index} style={getMonthCellStyle(monthData.month)}>
+                        {Math.floor(Math.random() * 30) + 70}%
+                      </td>
+                    ))}
                   </tr>
-                  <tr style={{ background: '#f8f9fa' }}>
-                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Portal Corporativo</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>20%</td>
-                    <td>25%</td>
-                    <td>30%</td>
-                    <td>35%</td>
-                    <td>40%</td>
-                    <td>45%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                  </tr>
-                  <tr style={{ background: '#f8f9fa' }}>
-                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>API REST v2</td>
-                    <td>15%</td>
-                    <td>18%</td>
-                    <td>22%</td>
-                    <td>25%</td>
-                    <td>28%</td>
-                    <td>30%</td>
-                    <td>32%</td>
-                    <td>35%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                  </tr>
-                </>
-              )}
-              <tr>
-                <td>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <button 
-                      onClick={() => toggleDepartment(1)}
-                      style={{
-                        background: '#6c757d',
-                        color: 'white',
-                        border: 'none',
-                        width: '24px',
-                        height: '24px',
-                        borderRadius: '50%',
-                        cursor: 'pointer',
-                        fontSize: '14px',
-                        fontWeight: 'bold'
-                      }}
-                    >
-                      {expandedDepartments.includes(1) ? '−' : '+'}
-                    </button>
-                    <span>.NET Development</span>
-                  </div>
-                </td>
-                <td>68%</td>
-                <td>75%</td>
-                <td>82%</td>
-                <td>79%</td>
-                <td>86%</td>
-                <td>73%</td>
-                <td>91%</td>
-                <td>77%</td>
-                <td>84%</td>
-                <td>89%</td>
-                <td>71%</td>
-                <td>83%</td>
-              </tr>
-              {expandedDepartments.includes(1) && (
-                <>
-                  <tr style={{ background: '#f8f9fa' }}>
-                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>API Microservicios</td>
-                    <td>30%</td>
-                    <td>35%</td>
-                    <td>40%</td>
-                    <td>45%</td>
-                    <td>50%</td>
-                    <td>55%</td>
-                    <td>60%</td>
-                    <td>65%</td>
-                    <td>70%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                  </tr>
-                  <tr style={{ background: '#f8f9fa' }}>
-                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Sistema Facturación</td>
-                    <td>0%</td>
-                    <td>25%</td>
-                    <td>30%</td>
-                    <td>35%</td>
-                    <td>40%</td>
-                    <td>45%</td>
-                    <td>50%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                  </tr>
-                  <tr style={{ background: '#f8f9fa' }}>
-                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Cloud Migration</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>20%</td>
-                    <td>25%</td>
-                    <td>30%</td>
-                    <td>35%</td>
-                    <td>40%</td>
-                    <td>45%</td>
-                    <td>50%</td>
-                    <td>55%</td>
-                    <td>60%</td>
-                  </tr>
-                </>
-              )}
-              <tr>
-                <td>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <button 
-                      onClick={() => toggleDepartment(2)}
-                      style={{
-                        background: '#6c757d',
-                        color: 'white',
-                        border: 'none',
-                        width: '24px',
-                        height: '24px',
-                        borderRadius: '50%',
-                        cursor: 'pointer',
-                        fontSize: '14px',
-                        fontWeight: 'bold'
-                      }}
-                    >
-                      {expandedDepartments.includes(2) ? '−' : '+'}
-                    </button>
-                    <span>Frontend Development</span>
-                  </div>
-                </td>
-                <td>81%</td>
-                <td>76%</td>
-                <td>89%</td>
-                <td>73%</td>
-                <td>85%</td>
-                <td>78%</td>
-                <td>82%</td>
-                <td>91%</td>
-                <td>75%</td>
-                <td>87%</td>
-                <td>80%</td>
-                <td>86%</td>
-              </tr>
-              {expandedDepartments.includes(2) && (
-                <>
-                  <tr style={{ background: '#f8f9fa' }}>
-                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Dashboard Principal</td>
-                    <td>40%</td>
-                    <td>45%</td>
-                    <td>50%</td>
-                    <td>55%</td>
-                    <td>60%</td>
-                    <td>65%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                  </tr>
-                  <tr style={{ background: '#f8f9fa' }}>
-                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Sistema de Usuarios</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>30%</td>
-                    <td>35%</td>
-                    <td>40%</td>
-                    <td>45%</td>
-                    <td>50%</td>
-                    <td>55%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                  </tr>
-                  <tr style={{ background: '#f8f9fa' }}>
-                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Módulo de Reportes</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>25%</td>
-                    <td>30%</td>
-                    <td>35%</td>
-                    <td>40%</td>
-                    <td>45%</td>
-                    <td>50%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                  </tr>
-                </>
-              )}
-              <tr>
-                <td>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <button 
-                      onClick={() => toggleDepartment(3)}
-                      style={{
-                        background: '#6c757d',
-                        color: 'white',
-                        border: 'none',
-                        width: '24px',
-                        height: '24px',
-                        borderRadius: '50%',
-                        cursor: 'pointer',
-                        fontSize: '14px',
-                        fontWeight: 'bold'
-                      }}
-                    >
-                      {expandedDepartments.includes(3) ? '−' : '+'}
-                    </button>
-                    <span>QA Testing</span>
-                  </div>
-                </td>
-                <td>72%</td>
-                <td>88%</td>
-                <td>75%</td>
-                <td>83%</td>
-                <td>79%</td>
-                <td>86%</td>
-                <td>74%</td>
-                <td>81%</td>
-                <td>90%</td>
-                <td>76%</td>
-                <td>85%</td>
-                <td>78%</td>
-              </tr>
-              {expandedDepartments.includes(3) && (
-                <>
-                  <tr style={{ background: '#f8f9fa' }}>
-                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Testing Automatizado</td>
-                    <td>20%</td>
-                    <td>22%</td>
-                    <td>25%</td>
-                    <td>28%</td>
-                    <td>30%</td>
-                    <td>32%</td>
-                    <td>35%</td>
-                    <td>38%</td>
-                    <td>40%</td>
-                    <td>42%</td>
-                    <td>45%</td>
-                    <td>48%</td>
-                  </tr>
-                  <tr style={{ background: '#f8f9fa' }}>
-                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Testing Manual</td>
-                    <td>0%</td>
-                    <td>15%</td>
-                    <td>18%</td>
-                    <td>20%</td>
-                    <td>22%</td>
-                    <td>25%</td>
-                    <td>28%</td>
-                    <td>30%</td>
-                    <td>32%</td>
-                    <td>35%</td>
-                    <td>38%</td>
-                    <td>0%</td>
-                  </tr>
-                  <tr style={{ background: '#f8f9fa' }}>
-                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Performance Testing</td>
-                    <td>25%</td>
-                    <td>28%</td>
-                    <td>30%</td>
-                    <td>32%</td>
-                    <td>35%</td>
-                    <td>38%</td>
-                    <td>40%</td>
-                    <td>42%</td>
-                    <td>45%</td>
-                    <td>48%</td>
-                    <td>50%</td>
-                    <td>52%</td>
-                  </tr>
-                </>
-              )}
-              <tr>
-                <td>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <button 
-                      onClick={() => toggleDepartment(4)}
-                      style={{
-                        background: '#6c757d',
-                        color: 'white',
-                        border: 'none',
-                        width: '24px',
-                        height: '24px',
-                        borderRadius: '50%',
-                        cursor: 'pointer',
-                        fontSize: '14px',
-                        fontWeight: 'bold'
-                      }}
-                    >
-                      {expandedDepartments.includes(4) ? '−' : '+'}
-                    </button>
-                    <span>DevOps</span>
-                  </div>
-                </td>
-                <td>85%</td>
-                <td>71%</td>
-                <td>88%</td>
-                <td>76%</td>
-                <td>82%</td>
-                <td>79%</td>
-                <td>87%</td>
-                <td>74%</td>
-                <td>83%</td>
-                <td>80%</td>
-                <td>89%</td>
-                <td>75%</td>
-              </tr>
-              {expandedDepartments.includes(4) && (
-                <>
-                  <tr style={{ background: '#f8f9fa' }}>
-                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Pipeline CI/CD</td>
-                    <td>35%</td>
-                    <td>38%</td>
-                    <td>40%</td>
-                    <td>42%</td>
-                    <td>45%</td>
-                    <td>48%</td>
-                    <td>50%</td>
-                    <td>52%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                  </tr>
-                  <tr style={{ background: '#f8f9fa' }}>
-                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Monitoreo y Alertas</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                    <td>25%</td>
-                    <td>28%</td>
-                    <td>30%</td>
-                    <td>32%</td>
-                    <td>35%</td>
-                    <td>38%</td>
-                    <td>40%</td>
-                    <td>42%</td>
-                    <td>0%</td>
-                    <td>0%</td>
-                  </tr>
-                  <tr style={{ background: '#f8f9fa' }}>
-                    <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Infraestructura como Código</td>
-                    <td>30%</td>
-                    <td>32%</td>
-                    <td>35%</td>
-                    <td>38%</td>
-                    <td>40%</td>
-                    <td>42%</td>
-                    <td>45%</td>
-                    <td>48%</td>
-                    <td>50%</td>
-                    <td>52%</td>
-                    <td>55%</td>
-                    <td>58%</td>
-                  </tr>
-                </>
-              )}
-              <tr>
-                <td>Data Science</td>
-                <td>79%</td>
-                <td>84%</td>
-                <td>77%</td>
-                <td>90%</td>
-                <td>73%</td>
-                <td>86%</td>
-                <td>81%</td>
-                <td>78%</td>
-                <td>85%</td>
-                <td>72%</td>
-                <td>88%</td>
-                <td>83%</td>
-              </tr>
-              <tr>
-                <td>Mobile Development</td>
-                <td>86%</td>
-                <td>78%</td>
-                <td>83%</td>
-                <td>75%</td>
-                <td>89%</td>
-                <td>81%</td>
-                <td>76%</td>
-                <td>84%</td>
-                <td>77%</td>
-                <td>90%</td>
-                <td>82%</td>
-                <td>79%</td>
-              </tr>
-              <tr>
-                <td>UI/UX Design</td>
-                <td>73%</td>
-                <td>87%</td>
-                <td>80%</td>
-                <td>85%</td>
-                <td>78%</td>
-                <td>82%</td>
-                <td>89%</td>
-                <td>76%</td>
-                <td>81%</td>
-                <td>84%</td>
-                <td>77%</td>
-                <td>86%</td>
-              </tr>
-              <tr>
-                <td>Product Management</td>
-                <td>88%</td>
-                <td>82%</td>
-                <td>75%</td>
-                <td>79%</td>
-                <td>86%</td>
-                <td>73%</td>
-                <td>84%</td>
-                <td>90%</td>
-                <td>77%</td>
-                <td>81%</td>
-                <td>85%</td>
-                <td>78%</td>
-              </tr>
-              <tr>
-                <td>Security Team</td>
-                <td>81%</td>
-                <td>76%</td>
-                <td>89%</td>
-                <td>83%</td>
-                <td>78%</td>
-                <td>85%</td>
-                <td>72%</td>
-                <td>87%</td>
-                <td>80%</td>
-                <td>86%</td>
-                <td>74%</td>
-                <td>91%</td>
-              </tr>
-              <tr>
-                <td>Cloud Infrastructure</td>
-                <td>77%</td>
-                <td>85%</td>
-                <td>72%</td>
-                <td>88%</td>
-                <td>81%</td>
-                <td>79%</td>
-                <td>86%</td>
-                <td>73%</td>
-                <td>84%</td>
-                <td>78%</td>
-                <td>90%</td>
-                <td>82%</td>
-              </tr>
-              <tr>
-                <td>Business Analysis</td>
-                <td>84%</td>
-                <td>79%</td>
-                <td>86%</td>
-                <td>77%</td>
-                <td>83%</td>
-                <td>90%</td>
-                <td>75%</td>
-                <td>81%</td>
-                <td>78%</td>
-                <td>85%</td>
-                <td>72%</td>
-                <td>87%</td>
-              </tr>
-              <tr>
-                <td>Technical Writing</td>
-                <td>79%</td>
-                <td>83%</td>
-                <td>77%</td>
-                <td>86%</td>
-                <td>80%</td>
-                <td>74%</td>
-                <td>89%</td>
-                <td>82%</td>
-                <td>76%</td>
-                <td>88%</td>
-                <td>81%</td>
-                <td>75%</td>
-              </tr>
-              <tr>
-                <td>Support Team</td>
-                <td>82%</td>
-                <td>88%</td>
-                <td>74%</td>
-                <td>80%</td>
-                <td>85%</td>
-                <td>77%</td>
-                <td>83%</td>
-                <td>89%</td>
-                <td>72%</td>
-                <td>86%</td>
-                <td>79%</td>
-                <td>84%</td>
-              </tr>
-              <tr>
-                <td>Research & Development</td>
-                <td>75%</td>
-                <td>81%</td>
-                <td>87%</td>
-                <td>73%</td>
-                <td>88%</td>
-                <td>82%</td>
-                <td>76%</td>
-                <td>85%</td>
-                <td>90%</td>
-                <td>77%</td>
-                <td>83%</td>
-                <td>79%</td>
-              </tr>
-              <tr>
-                <td>Machine Learning</td>
-                <td>83%</td>
-                <td>77%</td>
-                <td>91%</td>
-                <td>85%</td>
-                <td>79%</td>
-                <td>86%</td>
-                <td>82%</td>
-                <td>88%</td>
-                <td>74%</td>
-                <td>81%</td>
-                <td>87%</td>
-                <td>80%</td>
-              </tr>
-              <tr>
-                <td>Blockchain Development</td>
-                <td>76%</td>
-                <td>89%</td>
-                <td>73%</td>
-                <td>87%</td>
-                <td>84%</td>
-                <td>78%</td>
-                <td>90%</td>
-                <td>75%</td>
-                <td>82%</td>
-                <td>86%</td>
-                <td>79%</td>
-                <td>83%</td>
-              </tr>
-              <tr>
-                <td>Game Development</td>
-                <td>88%</td>
-                <td>74%</td>
-                <td>85%</td>
-                <td>79%</td>
-                <td>91%</td>
-                <td>76%</td>
-                <td>83%</td>
-                <td>87%</td>
-                <td>80%</td>
-                <td>84%</td>
-                <td>78%</td>
-                <td>86%</td>
-              </tr>
-              <tr>
-                <td>Network Engineering</td>
-                <td>81%</td>
-                <td>86%</td>
-                <td>72%</td>
-                <td>89%</td>
-                <td>77%</td>
-                <td>84%</td>
-                <td>90%</td>
-                <td>73%</td>
-                <td>85%</td>
-                <td>78%</td>
-                <td>82%</td>
-                <td>87%</td>
-              </tr>
-              <tr>
-                <td>Database Administration</td>
-                <td>85%</td>
-                <td>78%</td>
-                <td>83%</td>
-                <td>76%</td>
-                <td>88%</td>
-                <td>81%</td>
-                <td>74%</td>
-                <td>86%</td>
-                <td>89%</td>
-                <td>82%</td>
-                <td>77%</td>
-                <td>84%</td>
-              </tr>
-              <tr>
-                <td>System Administration</td>
-                <td>79%</td>
-                <td>84%</td>
-                <td>87%</td>
-                <td>81%</td>
-                <td>75%</td>
-                <td>90%</td>
-                <td>83%</td>
-                <td>78%</td>
-                <td>86%</td>
-                <td>73%</td>
-                <td>89%</td>
-                <td>82%</td>
-              </tr>
-              <tr>
-                <td>API Development</td>
-                <td>82%</td>
-                <td>77%</td>
-                <td>89%</td>
-                <td>85%</td>
-                <td>80%</td>
-                <td>74%</td>
-                <td>87%</td>
-                <td>91%</td>
-                <td>76%</td>
-                <td>83%</td>
-                <td>88%</td>
-                <td>79%</td>
-              </tr>
-              <tr>
-                <td>Microservices Team</td>
-                <td>87%</td>
-                <td>81%</td>
-                <td>74%</td>
-                <td>88%</td>
-                <td>82%</td>
-                <td>89%</td>
-                <td>75%</td>
-                <td>84%</td>
-                <td>90%</td>
-                <td>77%</td>
-                <td>83%</td>
-                <td>86%</td>
-              </tr>
-              <tr>
-                <td>Performance Testing</td>
-                <td>73%</td>
-                <td>88%</td>
-                <td>82%</td>
-                <td>79%</td>
-                <td>85%</td>
-                <td>76%</td>
-                <td>91%</td>
-                <td>83%</td>
-                <td>78%</td>
-                <td>86%</td>
-                <td>80%</td>
-                <td>87%</td>
-              </tr>
+                  {expandedDepartments.includes(deptIndex) && (
+                    <>
+                      <tr style={{ background: '#f8f9fa' }}>
+                        <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Proyecto A</td>
+                        <td colSpan={12} style={{ position: 'relative', height: '40px', padding: '10px 0' }}>
+                          {renderProjectBar(1, 6, 'Proyecto A')}
+                        </td>
+                      </tr>
+                      <tr style={{ background: '#f8f9fa' }}>
+                        <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Proyecto B</td>
+                        <td colSpan={12} style={{ position: 'relative', height: '40px', padding: '10px 0' }}>
+                          {renderProjectBar(3, 8, 'Proyecto B')}
+                        </td>
+                      </tr>
+                      <tr style={{ background: '#f8f9fa' }}>
+                        <td style={{ paddingLeft: '48px', fontStyle: 'italic' }}>Proyecto C</td>
+                        <td colSpan={12} style={{ position: 'relative', height: '40px', padding: '10px 0' }}>
+                          {renderProjectBar(5, 10, 'Proyecto C')}
+                        </td>
+                      </tr>
+                    </>
+                  )}
+                </React.Fragment>
+              ))}
+              
+              {filteredDepartments.slice(5).map((deptName, deptIndex) => (
+                <tr key={deptIndex + 5}>
+                  <td>{deptName}</td>
+                  {months.map((monthData, index) => (
+                    <td key={index} style={getMonthCellStyle(monthData.month)}>
+                      {Math.floor(Math.random() * 30) + 70}%
+                    </td>
+                  ))}
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
