@@ -1,174 +1,213 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ViewMode, Quarter, TimeRange } from '../../data/types';
-import { mockDepartments, generateProjectsForYear, calculateMonthlyCapacityForYear } from '../../data/mockData';
-import TimeSelector from './TimeSelector';
-import MultiSelectDropdown from './MultiSelectDropdown';
-import GanttTable from './GanttTable';
+import React from 'react';
+import './GanttView.css';
 
 const GanttView: React.FC = () => {
-  const navigate = useNavigate();
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const [viewMode, setViewMode] = useState<ViewMode>('year');
-  const [selectedQuarter, setSelectedQuarter] = useState<Quarter | undefined>(undefined);
-  const [customRange, setCustomRange] = useState<TimeRange>({
-    startMonth: 0,
-    endMonth: 11,
-    startYear: currentYear,
-    endYear: currentYear
-  });
-  const [selectedDepartments, setSelectedDepartments] = useState<string[]>(
-    mockDepartments.map(dept => dept.id)
-  );
-
-  // Sincronizar customRange cuando cambie el año
-  useEffect(() => {
-    setCustomRange(prev => ({
-      ...prev,
-      startYear: currentYear,
-      endYear: currentYear
-    }));
-  }, [currentYear]);
-  
-  // Generar datos dinámicamente para el año seleccionado o rango personalizado
-  const projectsForCurrentYear = useMemo(() => {
-    if (viewMode === 'custom' && customRange) {
-      // Para rangos personalizados, generar datos para todos los años involucrados
-      const years = [];
-      for (let year = customRange.startYear; year <= customRange.endYear; year++) {
-        years.push(year);
-      }
-      
-      // Generar proyectos para cada año y combinar
-      const allProjects = years.flatMap(year => generateProjectsForYear(year));
-      return allProjects;
-    } else {
-      // Para vista anual o trimestral, usar solo el año seleccionado
-      return generateProjectsForYear(currentYear);
-    }
-  }, [currentYear, viewMode, customRange]);
-
-  const monthlyCapacityForCurrentYear = useMemo(() => {
-    if (viewMode === 'custom' && customRange) {
-      // Para rangos personalizados, generar capacidad para todos los años involucrados
-      const years = [];
-      for (let year = customRange.startYear; year <= customRange.endYear; year++) {
-        years.push(year);
-      }
-      
-      // Generar capacidad para cada año y combinar
-      const allCapacities = years.flatMap(year => calculateMonthlyCapacityForYear(year));
-      return allCapacities;
-    } else {
-      // Para vista anual o trimestral, usar solo el año seleccionado
-      return calculateMonthlyCapacityForYear(currentYear);
-    }
-  }, [currentYear, viewMode, customRange]);
-
-  const handleViewModeChange = (mode: ViewMode) => {
-    setViewMode(mode);
-    if (mode === 'quarter') {
-      setSelectedQuarter(1);
-    } else {
-      setSelectedQuarter(undefined);
-    }
-  };
-
-  const handleYearChange = (year: number) => {
-    setCurrentYear(year);
-  };
-
-  const handleQuarterChange = (quarter: Quarter) => {
-    setSelectedQuarter(quarter);
-  };
-
-  const handleCustomRangeChange = (range: TimeRange) => {
-    setCustomRange(range);
-  };
-
   return (
-    <div className="gantt-view">
-      <div className="gantt-header-section">
-        <div className="gantt-header-content">
-          <div className="gantt-header-left">
-            <button 
-              onClick={() => navigate('/')}
-              className="gantt-back-button"
-              aria-label="Volver al inicio"
-            >
-              <span className="back-icon">←</span>
-              <span className="back-text">Inicio</span>
-            </button>
-            <h1 className="gantt-header-title">Modo Gantt - Capacidad de Departamentos</h1>
+    <div className="gantt-container">
+      {/* Header Principal */}
+      <header className="main-header">
+        <h1>Sistema de Gestión</h1>
+        <p>Panel de administración con filtros y tabla</p>
+      </header>
+
+      {/* Barra de Filtros Sticky */}
+      <div className="filters-bar">
+        <div className="filters-container">
+          <div className="filter-group">
+            <label htmlFor="search">Buscar:</label>
+            <input type="text" id="search" placeholder="Nombre, email..." />
           </div>
-        </div>
-      </div>
-
-      <div className="gantt-controls">
-        <div className="controls-left">
-          <TimeSelector
-            currentYear={currentYear}
-            viewMode={viewMode}
-            selectedQuarter={selectedQuarter}
-            customRange={customRange}
-            onViewModeChange={handleViewModeChange}
-            onYearChange={handleYearChange}
-            onQuarterChange={handleQuarterChange}
-            onCustomRangeChange={handleCustomRangeChange}
-          />
-        </div>
-        <div className="controls-right">
-          <MultiSelectDropdown
-            departments={mockDepartments}
-            selectedDepartments={selectedDepartments}
-            onSelectionChange={setSelectedDepartments}
-          />
-        </div>
-      </div>
-
-      <div className="gantt-content">
-        <GanttTable
-          departments={mockDepartments}
-          projects={projectsForCurrentYear}
-          monthlyCapacities={monthlyCapacityForCurrentYear}
-          viewMode={viewMode}
-          selectedQuarter={selectedQuarter}
-          customRange={customRange}
-          selectedDepartments={selectedDepartments}
-        />
-      </div>
-
-      {/* Resumen de capacidad al final */}
-      <div className="capacity-summary">
-        <div className="summary-card">
-          <h3>Resumen de Capacidad</h3>
-          <div className="summary-stats">
-            <div className="stat-item">
-              <span className="stat-label">Departamentos activos:</span>
-              <span className="stat-value">{selectedDepartments.length}</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">Total de personas:</span>
-              <span className="stat-value">
-                {mockDepartments
-                  .filter(dept => selectedDepartments.includes(dept.id))
-                  .reduce((total, dept) => total + dept.people.length, 0)
-                }
-              </span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">Capacidad total anual:</span>
-              <span className="stat-value">
-                {mockDepartments
-                  .filter(dept => selectedDepartments.includes(dept.id))
-                  .reduce((total, dept) => total + dept.maxCapacityPerYear, 0)
-                  .toLocaleString()
-                }h
-              </span>
-            </div>
+          
+          <div className="filter-group">
+            <label htmlFor="status">Estado:</label>
+            <select id="status">
+              <option value="">Todos</option>
+              <option value="activo">Activo</option>
+              <option value="inactivo">Inactivo</option>
+              <option value="pendiente">Pendiente</option>
+            </select>
           </div>
+          
+          <div className="filter-group">
+            <label htmlFor="department">Departamento:</label>
+            <select id="department">
+              <option value="">Todos</option>
+              <option value="ventas">Ventas</option>
+              <option value="marketing">Marketing</option>
+              <option value="desarrollo">Desarrollo</option>
+              <option value="soporte">Soporte</option>
+            </select>
+          </div>
+          
+          <button className="filter-button">Filtrar</button>
         </div>
       </div>
+
+      {/* Contenido Principal */}
+      <main className="content">
+        {/* Tabla con encabezado sticky */}
+        <div className="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Departamento</th>
+                <th>Estado</th>
+                <th>Fecha Ingreso</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>001</td>
+                <td>Ana García</td>
+                <td>ana.garcia@empresa.com</td>
+                <td>Ventas</td>
+                <td>Activo</td>
+                <td>15/01/2024</td>
+                <td><button className="filter-button">Ver</button></td>
+              </tr>
+              <tr>
+                <td>002</td>
+                <td>Carlos López</td>
+                <td>carlos.lopez@empresa.com</td>
+                <td>Desarrollo</td>
+                <td>Activo</td>
+                <td>10/02/2024</td>
+                <td><button className="filter-button">Ver</button></td>
+              </tr>
+              <tr>
+                <td>003</td>
+                <td>María Rodríguez</td>
+                <td>maria.rodriguez@empresa.com</td>
+                <td>Marketing</td>
+                <td>Pendiente</td>
+                <td>22/02/2024</td>
+                <td><button className="filter-button">Ver</button></td>
+              </tr>
+              <tr>
+                <td>004</td>
+                <td>Juan Martínez</td>
+                <td>juan.martinez@empresa.com</td>
+                <td>Soporte</td>
+                <td>Activo</td>
+                <td>05/03/2024</td>
+                <td><button className="filter-button">Ver</button></td>
+              </tr>
+              <tr>
+                <td>005</td>
+                <td>Laura Sánchez</td>
+                <td>laura.sanchez@empresa.com</td>
+                <td>Ventas</td>
+                <td>Inactivo</td>
+                <td>12/03/2024</td>
+                <td><button className="filter-button">Ver</button></td>
+              </tr>
+              <tr>
+                <td>006</td>
+                <td>Pedro Gómez</td>
+                <td>pedro.gomez@empresa.com</td>
+                <td>Desarrollo</td>
+                <td>Activo</td>
+                <td>18/03/2024</td>
+                <td><button className="filter-button">Ver</button></td>
+              </tr>
+              <tr>
+                <td>011</td>
+                <td>Isabel Moreno</td>
+                <td>isabel.moreno@empresa.com</td>
+                <td>Marketing</td>
+                <td>Activo</td>
+                <td>22/04/2024</td>
+                <td><button className="filter-button">Ver</button></td>
+              </tr>
+              <tr>
+                <td>012</td>
+                <td>Francisco Jiménez</td>
+                <td>francisco.jimenez@empresa.com</td>
+                <td>Soporte</td>
+                <td>Inactivo</td>
+                <td>29/04/2024</td>
+                <td><button className="filter-button">Ver</button></td>
+              </tr>
+              <tr>
+                <td>013</td>
+                <td>Lucía Herrera</td>
+                <td>lucia.herrera@empresa.com</td>
+                <td>Ventas</td>
+                <td>Pendiente</td>
+                <td>06/05/2024</td>
+                <td><button className="filter-button">Ver</button></td>
+              </tr>
+              <tr>
+                <td>014</td>
+                <td>Andrés Vega</td>
+                <td>andres.vega@empresa.com</td>
+                <td>Desarrollo</td>
+                <td>Activo</td>
+                <td>13/05/2024</td>
+                <td><button className="filter-button">Ver</button></td>
+              </tr>
+              <tr>
+                <td>015</td>
+                <td>Patricia Castro</td>
+                <td>patricia.castro@empresa.com</td>
+                <td>Marketing</td>
+                <td>Activo</td>
+                <td>20/05/2024</td>
+                <td><button className="filter-button">Ver</button></td>
+              </tr>
+              <tr>
+                <td>016</td>
+                <td>Javier Ramos</td>
+                <td>javier.ramos@empresa.com</td>
+                <td>Soporte</td>
+                <td>Activo</td>
+                <td>27/05/2024</td>
+                <td><button className="filter-button">Ver</button></td>
+              </tr>
+              <tr>
+                <td>017</td>
+                <td>Beatriz Ortega</td>
+                <td>beatriz.ortega@empresa.com</td>
+                <td>Ventas</td>
+                <td>Inactivo</td>
+                <td>03/06/2024</td>
+                <td><button className="filter-button">Ver</button></td>
+              </tr>
+              <tr>
+                <td>018</td>
+                <td>Raúl Mendoza</td>
+                <td>raul.mendoza@empresa.com</td>
+                <td>Desarrollo</td>
+                <td>Activo</td>
+                <td>10/06/2024</td>
+                <td><button className="filter-button">Ver</button></td>
+              </tr>
+              <tr>
+                <td>019</td>
+                <td>Cristina Vargas</td>
+                <td>cristina.vargas@empresa.com</td>
+                <td>Marketing</td>
+                <td>Pendiente</td>
+                <td>17/06/2024</td>
+                <td><button className="filter-button">Ver</button></td>
+              </tr>
+              <tr>
+                <td>020</td>
+                <td>Sergio Peña</td>
+                <td>sergio.pena@empresa.com</td>
+                <td>Soporte</td>
+                <td>Activo</td>
+                <td>24/06/2024</td>
+                <td><button className="filter-button">Ver</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
     </div>
   );
 };
