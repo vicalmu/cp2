@@ -2,7 +2,7 @@
 
 ## 🎯 **ESTADO ACTUAL DEL PROYECTO**
 
-**PUNTO DE CONTROL: Look & feel homogéneo implementado - indicador de año y filtros unificados**
+**PUNTO DE CONTROL: Filtros optimizados y layout mejorado - sticky headers funcionando perfectamente**
 
 ### **✅ FUNCIONANDO PERFECTAMENTE:**
 - **Sticky Headers**: Filtros en `top: 0` y `thead` en `top: 71px`
@@ -26,6 +26,8 @@
 - **Sistema de Filtrado**: Estado `selectedDepartments` que filtra la tabla dinámicamente
 - **Look & Feel Homogéneo**: Selector de meses con mismo diseño que departamentos
 - **Indicador de Año**: Año aparece debajo de "Ene" cuando cambia de año
+- **Filtros Optimizados**: Tamaños reducidos para mejor layout (meses: 200px, departamentos: 250px)
+- **Filtro de Estados Eliminado**: Barra de filtros más limpia y funcional
 
 ### **📊 FUNCIONALIDADES IMPLEMENTADAS:**
 1. **Barras de Proyecto**: 
@@ -72,7 +74,7 @@
 - **Event Listeners**: Cierre automático de dropdowns
 
 ### **🚧 PENDIENTE:**
-- **Filtros Adicionales**: Activar filtros de "Buscar" y "Estado" (actualmente mockup)
+- **Filtro de Búsqueda**: Activar funcionalidad real para "Buscar" (actualmente mockup)
 - **20 Departamentos Restantes**: Implementar expansión para los otros departamentos
 - **Funcionalidad Gantt Avanzada**: Barras de proyecto más sofisticadas, cálculo de capacidad
 
@@ -104,7 +106,7 @@
 
 ## 📋 **PRÓXIMOS PASOS SUGERIDOS:**
 1. **Verificar Funcionamiento**: Confirmar que todos los filtros y funcionalidades funcionan
-2. **Activar Filtros Mockup**: Implementar funcionalidad real para "Buscar" y "Estado"
+2. **Activar Filtro de Búsqueda**: Implementar funcionalidad real para "Buscar"
 3. **Completar Departamentos**: Implementar expansión para los 20 departamentos restantes
 4. **Mejorar Gantt**: Barras de proyecto más avanzadas y cálculo de capacidad
 5. **Refinamientos UI**: Mejorar la experiencia visual y de usuario
@@ -126,6 +128,7 @@
 - **Commit 3**: PUNTO DE CONTROL: Líneas desplegables implementadas - 5 departamentos con proyectos expandibles
 - **Commit 4**: PUNTO DE CONTROL: Filtro de departamento multiselect implementado - barras de proyecto y filtros avanzados funcionando
 - **Commit 5**: PUNTO DE CONTROL: Look & feel homogéneo implementado - indicador de año y filtros unificados
+- **Commit 6**: PUNTO DE CONTROL: Filtros optimizados y layout mejorado - sticky headers funcionando perfectamente
 
 ---
 
