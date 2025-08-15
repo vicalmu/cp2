@@ -193,15 +193,17 @@ const GanttView: React.FC = () => {
             <div id="departmentFilterContainer" style={{ position: 'relative', width: '250px' }}>
               <div 
                 style={{
-                  border: '1px solid #ccc',
-                  borderRadius: '4px',
-                  padding: '8px 12px',
-                  minHeight: '38px',
+                  border: '1px solid #e1e5e9',
+                  borderRadius: '8px',
+                  padding: '10px 16px',
+                  minHeight: '42px',
                   background: 'white',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'space-between'
+                  justifyContent: 'space-between',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                  transition: 'all 0.3s ease'
                 }}
                 onClick={() => {
                   const dropdown = document.getElementById('departmentDropdown');
@@ -335,15 +337,17 @@ const GanttView: React.FC = () => {
             <div id="monthFilterContainer" style={{ position: 'relative', width: '200px' }}>
               <div 
                 style={{
-                  border: '1px solid #ccc',
-                  borderRadius: '4px',
-                  padding: '8px 12px',
-                  minHeight: '38px',
+                  border: '1px solid #e1e5e9',
+                  borderRadius: '8px',
+                  padding: '10px 16px',
+                  minHeight: '42px',
                   background: 'white',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'space-between'
+                  justifyContent: 'space-between',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                  transition: 'all 0.3s ease'
                 }}
                 onClick={() => {
                   const dropdown = document.getElementById('monthDropdown');
