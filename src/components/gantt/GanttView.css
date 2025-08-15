@@ -164,3 +164,19 @@
     left: 100%;
   }
 }
+
+/* Bordes consistentes para todas las celdas de la tabla Gantt */
+.gantt-container table td,
+.gantt-container table th {
+  border-right: 1px solid #f0f0f0;
+}
+
+.gantt-container table td:last-child,
+.gantt-container table th:last-child {
+  border-right: none; /* No borde en la última columna */
+}
+
+/* Borde inferior para las filas de proyectos */
+.gantt-container table tr[style*="background: #f8f9fa"] td:first-child {
+  border-bottom: 1px solid #f0f0f0;
+}
