@@ -125,9 +125,9 @@ const GanttView: React.FC = () => {
           position: 'absolute',
           left: `${startPosition}%`,
           width: `${width}%`,
-          height: '22px',
+          height: '30px',
           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          borderRadius: '11px',
+          borderRadius: '6px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -137,7 +137,10 @@ const GanttView: React.FC = () => {
           boxShadow: '0 3px 12px rgba(102, 126, 234, 0.3)',
           cursor: 'pointer',
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          zIndex: 10,
+          top: '50%',
+          transform: 'translateY(-50%)'
         }}
         title={`${projectName}: ${startMonth}/${2025} - ${endMonth}/${2025}`}
       >

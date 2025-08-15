@@ -2,7 +2,7 @@
 
 ## 🎯 **ESTADO ACTUAL DEL PROYECTO**
 
-**PUNTO DE CONTROL: Bordes verticales completos implementados - grid visual perfecto en toda la tabla**
+**PUNTO DE CONTROL: Barras de proyecto optimizadas - z-index superior y dimensiones mejoradas**
 
 ### **✅ FUNCIONANDO PERFECTAMENTE:**
 - **Sticky Headers**: Filtros en `top: 0` y `thead` en `top: 71px`
@@ -31,13 +31,18 @@
 - **Grid Visual Completo**: Bordes verticales perfectamente alineados en todas las filas de proyecto
 - **Sistema de Bordes CSS**: Pseudo-elementos y clases CSS para simular columnas individuales
 - **Alineación Perfecta**: Bordes coinciden exactamente con las columnas de meses y porcentajes
+- **Barras de Proyecto Optimizadas**: Z-index superior, altura aumentada y centrado vertical perfecto
 
 ### **📊 FUNCIONALIDADES IMPLEMENTADAS:**
 1. **Barras de Proyecto**: 
    - Posicionamiento preciso desde mes de inicio hasta mes de fin
-   - Gradientes verdes con bordes redondeados
+   - Gradientes azul-púrpura con bordes redondeados
    - Tooltips con información de duración
    - Transiciones suaves
+   - Z-index superior (10) para estar por encima de los bordes
+   - Altura optimizada (30px) para mejor visibilidad
+   - Centrado vertical perfecto en cada celda
+   - Border-radius sutil (6px) para look profesional
 
 2. **Marca del Mes Actual (Agosto)**:
    - Solo bordes sutiles (sin background)
@@ -140,6 +145,7 @@
 - **Commit 5**: PUNTO DE CONTROL: Look & feel homogéneo implementado - indicador de año y filtros unificados
 - **Commit 6**: PUNTO DE CONTROL: Filtros optimizados y layout mejorado - sticky headers funcionando perfectamente
 - **Commit 7**: PUNTO DE CONTROL: Bordes verticales completos implementados - grid visual perfecto en toda la tabla
+- **Commit 8**: PUNTO DE CONTROL: Barras de proyecto optimizadas - z-index superior y dimensiones mejoradas
 
 ---
 
