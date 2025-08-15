@@ -29,14 +29,23 @@ const GanttView: React.FC = () => {
     setStartMonth({ month: 1, year: currentYear });
   }, []);
 
-  // Cerrar dropdown al hacer click fuera
+  // Cerrar dropdowns al hacer click fuera
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      const dropdown = document.getElementById('departmentDropdown');
-      const filterContainer = document.getElementById('departmentFilterContainer');
+      // Cerrar dropdown de departamentos
+      const deptDropdown = document.getElementById('departmentDropdown');
+      const deptContainer = document.getElementById('departmentFilterContainer');
       
-      if (dropdown && filterContainer && !filterContainer.contains(event.target as Node)) {
-        dropdown.style.display = 'none';
+      if (deptDropdown && deptContainer && !deptContainer.contains(event.target as Node)) {
+        deptDropdown.style.display = 'none';
+      }
+
+      // Cerrar dropdown de meses
+      const monthDropdown = document.getElementById('monthDropdown');
+      const monthContainer = document.getElementById('monthFilterContainer');
+      
+      if (monthDropdown && monthContainer && !monthContainer.contains(event.target as Node)) {
+        monthDropdown.style.display = 'none';
       }
     };
 
@@ -331,39 +340,132 @@ const GanttView: React.FC = () => {
           
           <div className="filter-group">
             <label htmlFor="startMonth">Mes desde:</label>
-            <select 
-              id="startMonth" 
-              value={`${startMonth.month}-${startMonth.year}`}
-              onChange={(e) => {
-                const [month, year] = e.target.value.split('-').map(Number);
-                setStartMonth({ month, year });
-              }}
-            >
-              <option value="1-2025">Enero 2025</option>
-              <option value="2-2025">Febrero 2025</option>
-              <option value="3-2025">Marzo 2025</option>
-              <option value="4-2025">Abril 2025</option>
-              <option value="5-2025">Mayo 2025</option>
-              <option value="6-2025">Junio 2025</option>
-              <option value="7-2025">Julio 2025</option>
-              <option value="8-2025">Agosto 2025</option>
-              <option value="9-2025">Septiembre 2025</option>
-              <option value="10-2025">Octubre 2025</option>
-              <option value="11-2025">Noviembre 2025</option>
-              <option value="12-2025">Diciembre 2025</option>
-              <option value="1-2026">Enero 2026</option>
-              <option value="2-2026">Febrero 2026</option>
-              <option value="3-2026">Marzo 2026</option>
-              <option value="4-2026">Abril 2026</option>
-              <option value="5-2026">Mayo 2026</option>
-              <option value="6-2026">Junio 2026</option>
-              <option value="7-2026">Julio 2026</option>
-              <option value="8-2026">Agosto 2026</option>
-              <option value="9-2026">Septiembre 2026</option>
-              <option value="10-2026">Octubre 2026</option>
-              <option value="11-2026">Noviembre 2026</option>
-              <option value="12-2026">Diciembre 2026</option>
-            </select>
+            <div id="monthFilterContainer" style={{ position: 'relative', width: '300px' }}>
+              <div 
+                style={{
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  padding: '8px 12px',
+                  minHeight: '38px',
+                  background: 'white',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between'
+                }}
+                onClick={() => {
+                  const dropdown = document.getElementById('monthDropdown');
+                  if (dropdown) {
+                    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+                  }
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ color: '#1976d2', fontWeight: '500' }}>
+                    {getMonthLabel(startMonth.month)} {startMonth.year}
+                  </span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span style={{ color: '#666', fontSize: '14px' }}>
+                    ▼
+                  </span>
+                </div>
+              </div>
+              
+              <div 
+                id="monthDropdown"
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  right: 0,
+                  background: 'white',
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  maxHeight: '300px',
+                  overflowY: 'auto',
+                  zIndex: 1000,
+                  display: 'none',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                  marginTop: '4px'
+                }}
+              >
+                <div style={{ padding: '8px 12px', borderBottom: '1px solid #f0f0f0', background: '#f8f9fa' }}>
+                  <span style={{ fontWeight: '500', color: '#333' }}>Seleccionar mes de inicio</span>
+                </div>
+                {[
+                  { month: 1, year: 2025, label: 'Enero 2025' },
+                  { month: 2, year: 2025, label: 'Febrero 2025' },
+                  { month: 3, year: 2025, label: 'Marzo 2025' },
+                  { month: 4, year: 2025, label: 'Abril 2025' },
+                  { month: 5, year: 2025, label: 'Mayo 2025' },
+                  { month: 6, year: 2025, label: 'Junio 2025' },
+                  { month: 7, year: 2025, label: 'Julio 2025' },
+                  { month: 8, year: 2025, label: 'Agosto 2025' },
+                  { month: 9, year: 2025, label: 'Septiembre 2025' },
+                  { month: 10, year: 2025, label: 'Octubre 2025' },
+                  { month: 11, year: 2025, label: 'Noviembre 2025' },
+                  { month: 12, year: 2025, label: 'Diciembre 2025' },
+                  { month: 1, year: 2026, label: 'Enero 2026' },
+                  { month: 2, year: 2026, label: 'Febrero 2026' },
+                  { month: 3, year: 2026, label: 'Marzo 2026' },
+                  { month: 4, year: 2026, label: 'Abril 2026' },
+                  { month: 5, year: 2026, label: 'Mayo 2026' },
+                  { month: 6, year: 2026, label: 'Junio 2026' },
+                  { month: 7, year: 2026, label: 'Julio 2026' },
+                  { month: 8, year: 2026, label: 'Agosto 2026' },
+                  { month: 9, year: 2026, label: 'Septiembre 2026' },
+                  { month: 10, year: 2026, label: 'Octubre 2026' },
+                  { month: 11, year: 2026, label: 'Noviembre 2026' },
+                  { month: 12, year: 2026, label: 'Diciembre 2026' }
+                ].map((monthData, index) => (
+                  <div
+                    key={index}
+                    onClick={() => {
+                      setStartMonth({ month: monthData.month, year: monthData.year });
+                      const dropdown = document.getElementById('monthDropdown');
+                      if (dropdown) {
+                        dropdown.style.display = 'none';
+                      }
+                    }}
+                    style={{
+                      padding: '10px 12px',
+                      cursor: 'pointer',
+                      background: (startMonth.month === monthData.month && startMonth.year === monthData.year) ? '#e3f2fd' : 'white',
+                      color: (startMonth.month === monthData.month && startMonth.year === monthData.year) ? '#1976d2' : '#333',
+                      borderBottom: '1px solid #f0f0f0',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      transition: 'background-color 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!(startMonth.month === monthData.month && startMonth.year === monthData.year)) {
+                        e.currentTarget.style.background = '#f8f9fa';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!(startMonth.month === monthData.month && startMonth.year === monthData.year)) {
+                        e.currentTarget.style.background = 'white';
+                      }
+                    }}
+                  >
+                    <input
+                      type="radio"
+                      checked={startMonth.month === monthData.month && startMonth.year === monthData.year}
+                      readOnly
+                      style={{ 
+                        margin: 0,
+                        width: '16px',
+                        height: '16px',
+                        accentColor: '#1976d2'
+                      }}
+                    />
+                    <span style={{ fontSize: '14px' }}>{monthData.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
           
           <button className="filter-button">Filtrar</button>
@@ -400,7 +502,20 @@ const GanttView: React.FC = () => {
                 </th>
                 {months.map((monthData, index) => (
                   <th key={index} style={getMonthCellStyle(monthData.month)}>
-                    {monthData.label}
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
+                      <span>{monthData.label}</span>
+                      {/* Mostrar año solo cuando cambie de año (mes 1) */}
+                      {monthData.month === 1 && (
+                        <span style={{ 
+                          fontSize: '10px', 
+                          color: '#666', 
+                          fontWeight: 'normal',
+                          lineHeight: '1'
+                        }}>
+                          {monthData.year}
+                        </span>
+                      )}
+                    </div>
                   </th>
                 ))}
               </tr>
