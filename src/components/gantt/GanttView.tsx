@@ -215,7 +215,15 @@ const GanttView: React.FC = () => {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-                  transition: 'all 0.3s ease'
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.12)';
+                  e.currentTarget.style.transform = 'translateY(-1px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+                  e.currentTarget.style.transform = 'translateY(0)';
                 }}
                 onClick={() => {
                   const dropdown = document.getElementById('departmentDropdown');
@@ -359,7 +367,15 @@ const GanttView: React.FC = () => {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-                  transition: 'all 0.3s ease'
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.12)';
+                  e.currentTarget.style.transform = 'translateY(-1px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+                  e.currentTarget.style.transform = 'translateY(0)';
                 }}
                 onClick={() => {
                   const dropdown = document.getElementById('monthDropdown');
@@ -504,6 +520,14 @@ const GanttView: React.FC = () => {
                         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                         border: '1px solid rgba(255,255,255,0.2)'
                       }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-3px) scale(1.08)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(102, 126, 234, 0.4)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                        e.currentTarget.style.boxShadow = '0 3px 12px rgba(102, 126, 234, 0.3)';
+                      }}
                     >
                       {expandedDepartments.length === 25 ? '−' : '+'}
                     </button>
@@ -550,6 +574,14 @@ const GanttView: React.FC = () => {
                             boxShadow: '0 2px 8px rgba(108, 117, 125, 0.3)',
                             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                             border: '1px solid rgba(255,255,255,0.2)'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
+                            e.currentTarget.style.boxShadow = '0 6px 20px rgba(108, 117, 125, 0.4)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                            e.currentTarget.style.boxShadow = '0 2px 8px rgba(108, 117, 125, 0.3)';
                           }}
                         >
                           {expandedDepartments.includes(deptIndex) ? '−' : '+'}
