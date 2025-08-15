@@ -154,3 +154,13 @@
     font-size: 1rem;
   }
 }
+
+/* Animación de destello sutil para barras de proyecto */
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}

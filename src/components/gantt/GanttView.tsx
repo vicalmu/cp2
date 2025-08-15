@@ -114,32 +114,44 @@ const GanttView: React.FC = () => {
   };
 
   // Función para renderizar barra de proyecto
-  const renderProjectBar = (startMonth: number, endMonth: number, projectName: string) => {
+    const renderProjectBar = (startMonth: number, endMonth: number, projectName: string) => {
     const totalMonths = 12;
     const startPosition = (startMonth - 1) / totalMonths * 100;
     const width = (endMonth - startMonth + 1) / totalMonths * 100;
-    
+
     return (
-      <div 
+      <div
         style={{
           position: 'absolute',
           left: `${startPosition}%`,
           width: `${width}%`,
-          height: '20px',
-          background: 'linear-gradient(90deg, #4CAF50, #45a049)',
-          borderRadius: '10px',
+          height: '22px',
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          borderRadius: '11px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           color: 'white',
           fontSize: '11px',
-          fontWeight: 'bold',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+          fontWeight: '600',
+          boxShadow: '0 3px 12px rgba(102, 126, 234, 0.3)',
           cursor: 'pointer',
-          transition: 'all 0.3s ease'
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          overflow: 'hidden'
         }}
         title={`${projectName}: ${startMonth}/${2025} - ${endMonth}/${2025}`}
       >
+        {/* Efecto de destello sutil */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: '-100%',
+          width: '100%',
+          height: '100%',
+          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+          animation: 'shimmer 5s infinite',
+          pointerEvents: 'none'
+        }} />
         {projectName}
       </div>
     );
